@@ -14,7 +14,7 @@
 
   <!-- This is the container -->
   <div class="container jumbotron">
-    <form class="form-signin">
+    <form id="login" class="form-signin">
 
       <!-- SJC Logo -->
       <img class="mb-4" src="/images/SJCandidate.png" alt="SJC logo" width="72" height="72">
@@ -59,6 +59,24 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+
+  <script>
+    // make login request when user submits form
+    $('#login').submit(function (e) {
+      e.preventDefault();
+      let username = $('#inputEmail').val().trim();
+      let password = $('#passwordInput').val();
+      console.log(username, password);
+      $.ajax({
+        url: "/login",
+        type: "post",
+        data: {
+          username: username,
+          password: password
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
