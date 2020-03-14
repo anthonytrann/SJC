@@ -11,6 +11,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
+const dbName = 'test';
+
 // session set up
 app.use(session({
   genid: function (req) {
@@ -47,6 +51,7 @@ app.post('/login', (req, res) => {
   console.log(req.session);
   res.send();
 });
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
