@@ -7,61 +7,87 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- Custom styles for this template -->
-  <link rel="stylesheet" type="text/css" href="stylesheets/homepage.css">
+  <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+  <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/demo.css" media="all" />
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
 
   <% include navbar.ejs %>
 
-  <div>
-    <form>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputEmail4">Email</label>
-          <input type="email" class="form-control" id="inputEmail4">
+  <header>
+    <div id="fdw-pricing-table">
+      <div class="plan plan1">
+        <div class="header">Community</div>
+        <div class="price">
+          <img src="/images/christian-church.png" width="50" height="50" alt="">
         </div>
-        <div class="form-group col-md-6">
-          <label for="inputPassword4">Password</label>
-          <input type="password" class="form-control" id="inputPassword4">
-        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
       </div>
-      <div class="form-group">
-        <label for="inputAddress">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-      </div>
-      <div class="form-group">
-        <label for="inputAddress2">Address 2</label>
-        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputCity">City</label>
-          <input type="text" class="form-control" id="inputCity">
+      <div class="plan plan2">
+        <div class="header">Candidates</div>
+        <div class="price">
+          <img src="/images/christian-saint.png" width="50" height="50" alt="">
         </div>
-        <div class="form-group col-md-4">
-          <label for="inputState">State</label>
-          <select id="inputState" class="form-control">
-            <option selected>Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <label for="inputZip">Zip</label>
-          <input type="text" class="form-control" id="inputZip">
-        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
       </div>
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck">
-          <label class="form-check-label" for="gridCheck">
-            Check me out
-          </label>
+      <div class="plan plan3">
+        <div class="header">Companions</div>
+        <div class="price">
+          <img src="/images/the-good-shepherd.png" width="50" height="50" alt="">
         </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
       </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
-  </div>
+    </div>
+    
+    <div id="fdw-pricing-table">
+      <div class="plan plan1">
+        <div class="header">Specialization</div>
+        <div class="price">
+          <img src="/images/holy-ghost.png" width="50" height="50" alt="">
+        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
+      </div>
+      <div class="plan plan2">
+        <div class="header">Address</div>
+        <div class="price">
+          <img src="/images/ten-commandment.png" width="50" height="50" alt="">
+        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
+      </div>
+      <div class="plan plan3">
+        <div class="header">Types</div>
+        <div class="price">
+          <img src="/images/sacred-heart.png" width="50" height="50" alt="">
+        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
+      </div>
+    </div>
+    
+    <div id="fdw-pricing-table">
+      <div class="plan plan1" id="blankDiv1">
+
+      </div>
+      <div class="plan plan2">
+        <div class="header">Statistics</div>
+        <div class="price">
+          <img src="/images/holy-bible.png" width="50" height="50" alt="">
+        </div>
+        <div class="monthly">per month</div>
+        <a class="signup" href="">Click here</a>
+      </div>
+      <div class="plan plan3" id="blankDiv2">
+
+      </div>
+    </div>
+  </header>
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
