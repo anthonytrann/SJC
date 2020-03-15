@@ -6,10 +6,11 @@ router.get('/', function (req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
-
 router.get('/homepage', function (req, res) {
   res.render('homepage');
 });
+
+router.get('/addCandidate')
 
 
 module.exports = router;

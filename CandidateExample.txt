@@ -1,0 +1,43 @@
+db.candidateList.insert({
+    "Patron Saint" : "Ignatius",
+    "Surname + Middlename" : "Smith Joe",
+    "Firstname" : "Bob",
+    "DoB" : new Date("Jan 24, 1997"),
+    "Email" : "email@email.com",
+    "Phone Number" : 07913636099,
+    "Community" : {
+        "Patron Saint" : "John Baptist",
+	"Name" : "Thien Than",
+	"Address" : {
+            "House Number" : 600,
+            "Street" : "Xa Lo Ha Noi",
+            "Ward" : "An Phu",
+            "District" : "2",
+            "City" : "Ho CHi Minh"
+	},
+	"Phone" : "+12345678901"
+    },   
+    "Permanent Residence" : {
+	"Region" : "South"
+        "House Number" : 600,
+        "Street" : "Xa Lo Ha Noi",
+        "Ward" : "An Phu",
+        "District" : "2",
+        "City" : "Ho CHi Minh"
+    },
+    "Candidate Type" : "Internal",
+    "Date Entered Candidacy" : new Date("Dec 25, 2018"),
+    "Date Entered Community" : new Date("Dec 25, 2018"),
+    "Formator" : {
+        "Patron Saint" : "Peter",
+        "Surname + Middlename" : "Philip",
+        "Firstname" : "Jim"
+    },
+    "Spiritual Director" : {
+        "Patron Saint" : "Anthony",
+        "Surname + Middlename" : "Nguyen Lam",
+        "Firstname" : "Triem"
+    },
+    "Specialisation" : "Computer Science",
+    "Current Education" : "Graduate"
+})
