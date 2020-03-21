@@ -7,8 +7,8 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- Custom styles for this template -->
   <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
-  <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" media="all" />
-  <link rel="stylesheet" type="text/css" href="stylesheets/demo.css" media="all" />
+  <!--<link rel="stylesheet" type="text/css" href="stylesheets/addCandidate.css" media="all" />
+  -->
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
@@ -21,45 +21,45 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputSaint">Patron Saint</label>
-          <input type="text" class="form-control" id="inputSaint" placeholder="Patron Saint">
+          <input type="text" class="form-control" id="inputSaint" placeholder="Patron Saint" name="patronSaint">
         </div>
         <div class="form-group col-md-4">
           <label for="inputSurnameMiddlename">Surname and Middlename</label>
-          <input type="text" class="form-control" id="inputSurnameMiddlename" placeholder="Surname + Middlename">
+          <input type="text" class="form-control" id="inputSurnameMiddlename" placeholder="Surname + Middlename" name="surnameMiddlename">
         </div>
         <div class="form-group col-md-4">
           <label for="inputFirstname">Firstname</label>
-          <input type="text" class="form-control" id="inputFirstname" placeholder="Firstname">
+          <input type="text" class="form-control" id="inputFirstname" placeholder="Firstname" name="firstname">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-4" data-provide="datepicker">
           <label for="inputDob">Date of Birth</label>
-          <input type="date" class="form-control" id="inputDob">
+          <input type="date" class="form-control" id="inputDob" name="dob">
         </div>
         <div class="form-group col-md-4">
           <label for="inputEmail">Email</label>
-          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email">
         </div>
         <div class="form-group col-md-4">
           <label for="inputPhone">Phone Number</label>
-          <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
+          <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" name="phoneNumber">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputUniversity">University</label>
-          <input type="text" class="form-control" id="inputUniversity" placeholder="University">
+          <input type="text" class="form-control" id="inputUniversity" placeholder="University" name="university">
         </div>
         <div class="form-group col-md-4">
           <label for="inputMajor">Specialised Major</label>
-          <input type="text" class="form-control" id="inputMajor" placeholder="Specialised Major">
+          <input type="text" class="form-control" id="inputMajor" placeholder="Specialised Major" name="major">
         </div>
         <div class="form-group col-md-4">
-          <label for="inputEducationYear">Year of Education</label>
-          <select id="inputEducationYear" class="form-control">
+          <label for="inputEducationStatus">Education Status</label>
+          <select id="inputEducationStatus" class="form-control" name="educationStatus">
             <option selected>Graduated</option>
             <option>Freshman</option>
             <option>Sophomore</option>
@@ -71,17 +71,19 @@
 
       <div class="row justify-content-around">
         <div class="form-group col-md-4">
-          One of two columns
+          <label for="inputFormator">Formator</label>
+          <input type="text" class="form-control" id="inputFormator" placeholder="Formator" name="formator">
         </div>
         <div class="form-group col-md-4">
-          One of two columns
+          <label for="inputSpiritualDirector">Spiritual Director</label>
+          <input type="text" class="form-control" id="inputSpiritualDirector" placeholder="Spiritual Director" name="spiritualDirector">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-4">
-          <label for="inputType">Candidancy Type</label>
-          <select id="inputType" class="form-control">
+          <label for="inputType">Candidacy Type</label>
+          <select id="inputType" class="form-control" name="candidacyType">
             <option selected>Exterior</option>
             <option>Interior</option>
             <option>Pre-Novice</option>
@@ -89,12 +91,12 @@
           </select>
         </div>
         <div class="form-group col-md-4">
-          <label for="inputDateCandidancy">Date Entered Candidancy</label>
-          <input type="date" class="form-control" id="inputDateCandidancy">
+          <label for="inputCandidacyDate">Date Entered Candidacy</label>
+          <input type="date" class="form-control" id="inputCandidacyDate" name="candidacyDate">
         </div>
         <div class="form-group col-md-4">
-          <label for="inputDateCommunity">Date Entered Community</label>
-          <input type="date" class="form-control" id="inputDateCommunity">
+          <label for="inputCommunityDate">Date Entered Community</label>
+          <input type="date" class="form-control" id="inputCommunityDate" name="communityDate">
         </div>
       </div>
 
@@ -104,30 +106,30 @@
           <div class="form-group" id="permanentAddress">
             <div class="form-row">
               <div class="form-group col-md-2">
-                <label for="inputHouseNumber">No.</label>
-                <input type="text" class="form-control" id="inputHouseNumber" placeholder="House Number">
+                <label for="inputHouseNumber1">No.</label>
+                <input type="text" class="form-control" id="inputHouseNumber1" placeholder="House Number" name="houseNumber1">
               </div>
               <div class="form-group col-md-10">
-                <label for="inputStreet">Street</label>
-                <input type="text" class="form-control" id="inputStreet" placeholder="Street Name">
+                <label for="inputStreet1">Street</label>
+                <input type="text" class="form-control" id="inputStreet1" placeholder="Street Name" name="street1">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputWard">Ward</label>
-                <input type="text" class="form-control" id="inputWard">
+                <label for="inputWard1">Ward</label>
+                <input type="text" class="form-control" id="inputWard1" name="ward1">
               </div>
               <div class="form-group col-md-6">
-                <label for="inputDistrict">District</label>
-                <input type="text" class="form-control" id="inputDistrict">
+                <label for="inputDistrict1">District</label>
+                <input type="text" class="form-control" id="inputDistrict1" name="district1">
               </div>
               <div class="form-group col-md-6">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <label for="inputCity1">City</label>
+                <input type="text" class="form-control" id="inputCity1" name="city1">
               </div>
               <div class="form-group col-md-6">
                 <label for="inputRegion">Region</label>
-                <select id="inputRegion" class="form-control">
+                <select id="inputRegion" class="form-control" name="region">
                   <option selected>Northern</option>
                   <option>Central</option>
                   <option>Southern</option>
@@ -143,53 +145,45 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputCommunityName">Community Name</label>
-                <input type="text" class="form-control" id="inputCommunityName" placeholder="Community Name">
+                <input type="text" class="form-control" id="inputCommunityName" placeholder="Community Name" name="communityName">
               </div>
               <div class="form-group col-md-4">
                 <label for="inputCommunitySaint">Patron Saint</label>
-                <input type="text" class="form-control" id="inputCommunitySaint" placeholder="Patron Saint">
+                <input type="text" class="form-control" id="inputCommunitySaint" placeholder="Patron Saint" name="communitySaint">
               </div>
               <div class="form-group col-md-4">
                 <label for="inputCommunityPhone">Phone Number</label>
-                <input type="text" class="form-control" id="inputCommunityPhone" placeholder="Phone Number">
+                <input type="text" class="form-control" id="inputCommunityPhone" placeholder="Phone Number" name="communityPhone">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-2">
-                <label for="inputHouseNumber">No.</label>
-                <input type="text" class="form-control" id="inputHouseNumber" placeholder="House Number">
+                <label for="inputHouseNumber2">No.</label>
+                <input type="text" class="form-control" id="inputHouseNumber2" placeholder="House Number" name="houseNumber2">
               </div>
               <div class="form-group col-md-10">
-                <label for="inputStreet">Street</label>
-                <input type="text" class="form-control" id="inputStreet" placeholder="Street Name">
+                <label for="inputStreet2">Street</label>
+                <input type="text" class="form-control" id="inputStreet2" placeholder="Street Name" name="street2">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-4">
-                <label for="inputWard">Ward</label>
-                <input type="text" class="form-control" id="inputWard">
+                <label for="inputWard2">Ward</label>
+                <input type="text" class="form-control" id="inputWard2" name="ward2">
               </div>
               <div class="form-group col-md-4">
-                <label for="inputDistrict">District</label>
-                <input type="text" class="form-control" id="inputDistrict">
+                <label for="inputDistrict2">District</label>
+                <input type="text" class="form-control" id="inputDistrict2" name="district2">
               </div>
               <div class="form-group col-md-4">
-                <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <label for="inputCity2">City</label>
+                <input type="text" class="form-control" id="inputCity2" name="city2">
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck">
-          <label class="form-check-label" for="gridCheck">
-            Check me out
-          </label>
-        </div>
-      </div>
       <button type="submit" class="btn btn-primary">Add</button>
     </form>
   </div>
