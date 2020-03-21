@@ -1,7 +1,7 @@
 /* Slider
 http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 */
-#fdw-pricing-table {
+#option-table {
 		margin:0 auto;
 		text-align: center;
 		width: fit-content; /* total computed width */
@@ -9,16 +9,20 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 		zoom: 1;
 	}
 
-	#fdw-pricing-table:before, #fdw-pricing-table:after {
+	#option-table
+:before, #option-table
+:after {
 	  content: "";
 	  display: table
 	}
 
-	#fdw-pricing-table:after {
+	#option-table
+:after {
 	  clear: both
 	}
 
-	#fdw-pricing-table .plan:hover {
+	#option-table
+ .plan:hover {
 		transform: scale(1.1);
 	}
 
@@ -28,7 +32,8 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 
 	/* --------------- */	
 
-	#fdw-pricing-table .plan {
+	#option-table
+ .plan {
 		font: 13px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;     
 		background: #fff;      
 		border: 1px solid #ddd;
@@ -44,7 +49,8 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 		box-shadow: 0 2px 2px -1px rgba(0,0,0,.3);		
 	}
 
-	#fdw-pricing-table .plan:after {
+	#option-table
+ .plan:after {
 	  z-index: -1; 
 	  position: absolute; 
 	  content: "";
@@ -62,14 +68,16 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 	  transform: rotate(3deg);	
 	}	
 	
-	#fdw-pricing-table .popular-plan {
+	#option-table
+ .popular-plan {
 		top: -20px;
 		padding: 40px 20px;   
 	}
 	
 	/* --------------- */	
 
-	#fdw-pricing-table .header {
+	#option-table
+ .header {
 		position: relative;
 		font-size: 18px;
 		font-weight: normal;
@@ -86,41 +94,49 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 		background-image: linear-gradient(#fff, #eee);
 	}
 
-	#fdw-pricing-table .header:after {
+	#option-table
+ .header:after {
 		position: absolute;
 		bottom: -8px; left: 0;
 		height: 3px; width: 100%;
 		content: '';
 	}
 	
-	#fdw-pricing-table .popular-plan .header {
+	#option-table
+ .popular-plan .header {
 		margin-top: -40px;
 		padding-top: 60px;		
 	}
 
-	#fdw-pricing-table .plan1 .header{
+	#option-table
+ .plan1 .header{
 		border-bottom-color: #B3E03F;
 	}
 
-	#fdw-pricing-table .plan2 .header{
+	#option-table
+ .plan2 .header{
 		border-bottom-color: #7BD553;
 	}
 
-	#fdw-pricing-table .plan3 .header{
+	#option-table
+ .plan3 .header{
 		border-bottom-color: #3AD5A0;
 	}
 
-	#fdw-pricing-table .plan4 .header{
+	#option-table
+ .plan4 .header{
 		border-bottom-color: #45D0DA;
 	}			
 	
 	/* --------------- */
 
-	#fdw-pricing-table .price{
+	#option-table
+ .price{
 		font-size: 45px;
 	}
 
-	#fdw-pricing-table .monthly{
+	#option-table
+ .monthly{
 		font-size: 13px;
 		margin-bottom: 20px;
 		text-transform: uppercase;
@@ -129,19 +145,22 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 
 	/* --------------- */
 
-	#fdw-pricing-table ul {
+	#option-table
+ ul {
 		margin: 20px 0;
 		padding: 0;
 		list-style: none;
 	}
 
-	#fdw-pricing-table li {
+	#option-table
+ li {
 		padding: 10px 0;
 	}
 	
 	/* --------------- */
 		
-	#fdw-pricing-table .signup {
+	#option-table
+ .signup {
 		position: relative;
 		padding: 10px 20px;
 		color: #fff;
@@ -157,29 +176,35 @@ http://www.freshdesignweb.com/free-beautiful-css3-table-style.html
 		opacity: .9;       
 	}
 
-	#fdw-pricing-table .signup:hover {
+	#option-table
+ .signup:hover {
 		opacity: 1;       
 	}
 
-	#fdw-pricing-table .signup:active {
+	#option-table
+ .signup:active {
 		-moz-box-shadow: 0 2px 2px rgba(0,0,0,.3) inset;
 		-webkit-box-shadow: 0 2px 2px rgba(0,0,0,.3) inset;
 		box-shadow: 0 2px 2px rgba(0,0,0,.3) inset;       
 	}			
 
-	#fdw-pricing-table .plan1 .signup{
+	#option-table
+ .plan1 .signup{
 		background: #B3E03F;
 	}
 
-	#fdw-pricing-table .plan2 .signup{
+	#option-table
+ .plan2 .signup{
 		background: #7BD553;
 	}
 
-	#fdw-pricing-table .plan3 .signup{
+	#option-table
+ .plan3 .signup{
 		background: #3AD5A0;
 	}
 
-	#fdw-pricing-table .plan4 .signup{
+	#option-table
+ .plan4 .signup{
 		background: #45D0DA;
 	}	
 	

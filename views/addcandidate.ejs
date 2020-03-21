@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,52 +15,184 @@
 
   <% include navbar.ejs %>
 
-  <form>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">Email</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+  <div class="jumbotron">
+    <form>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputSaint">Patron Saint</label>
+          <input type="text" class="form-control" id="inputSaint" placeholder="Patron Saint">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputSurnameMiddlename">Surname and Middlename</label>
+          <input type="text" class="form-control" id="inputSurnameMiddlename" placeholder="Surname + Middlename">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputFirstname">Firstname</label>
+          <input type="text" class="form-control" id="inputFirstname" placeholder="Firstname">
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+
+      <div class="form-row">
+        <div class="form-group col-md-4" data-provide="datepicker">
+          <label for="inputDob">Date of Birth</label>
+          <input type="date" class="form-control" id="inputDob">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPhone">Phone Number</label>
+          <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="inputAddress">Address</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-      <label for="inputAddress2">Address 2</label>
-      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputCity">City</label>
-        <input type="text" class="form-control" id="inputCity">
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputUniversity">University</label>
+          <input type="text" class="form-control" id="inputUniversity" placeholder="University">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputMajor">Specialised Major</label>
+          <input type="text" class="form-control" id="inputMajor" placeholder="Specialised Major">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEducationYear">Year of Education</label>
+          <select id="inputEducationYear" class="form-control">
+            <option selected>Graduated</option>
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">State</label>
-        <select id="inputState" class="form-control">
-          <option selected>Choose...</option>
-          <option>...</option>
-        </select>
+
+      <div class="row justify-content-around">
+        <div class="form-group col-md-4">
+          One of two columns
+        </div>
+        <div class="form-group col-md-4">
+          One of two columns
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputType">Candidancy Type</label>
+          <select id="inputType" class="form-control">
+            <option selected>Exterior</option>
+            <option>Interior</option>
+            <option>Pre-Novice</option>
+            <option>Ex-Candidate</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputDateCandidancy">Date Entered Candidancy</label>
+          <input type="date" class="form-control" id="inputDateCandidancy">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputDateCommunity">Date Entered Community</label>
+          <input type="date" class="form-control" id="inputDateCommunity">
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck">
-        <label class="form-check-label" for="gridCheck">
-          Check me out
-        </label>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="permanentAddress">Permanent Address</label>
+          <div class="form-group" id="permanentAddress">
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="inputHouseNumber">No.</label>
+                <input type="text" class="form-control" id="inputHouseNumber" placeholder="House Number">
+              </div>
+              <div class="form-group col-md-10">
+                <label for="inputStreet">Street</label>
+                <input type="text" class="form-control" id="inputStreet" placeholder="Street Name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputWard">Ward</label>
+                <input type="text" class="form-control" id="inputWard">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputDistrict">District</label>
+                <input type="text" class="form-control" id="inputDistrict">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputRegion">Region</label>
+                <select id="inputRegion" class="form-control">
+                  <option selected>Northern</option>
+                  <option>Central</option>
+                  <option>Southern</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="communityAddress">Community Address</label>
+          <div class="form-group" id="communityAddress">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputCommunityName">Community Name</label>
+                <input type="text" class="form-control" id="inputCommunityName" placeholder="Community Name">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputCommunitySaint">Patron Saint</label>
+                <input type="text" class="form-control" id="inputCommunitySaint" placeholder="Patron Saint">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputCommunityPhone">Phone Number</label>
+                <input type="text" class="form-control" id="inputCommunityPhone" placeholder="Phone Number">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="inputHouseNumber">No.</label>
+                <input type="text" class="form-control" id="inputHouseNumber" placeholder="House Number">
+              </div>
+              <div class="form-group col-md-10">
+                <label for="inputStreet">Street</label>
+                <input type="text" class="form-control" id="inputStreet" placeholder="Street Name">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputWard">Ward</label>
+                <input type="text" class="form-control" id="inputWard">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputDistrict">District</label>
+                <input type="text" class="form-control" id="inputDistrict">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputCity">City</label>
+                <input type="text" class="form-control" id="inputCity">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
-  </form>
+
+      <div class="form-group">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="gridCheck">
+          <label class="form-check-label" for="gridCheck">
+            Check me out
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

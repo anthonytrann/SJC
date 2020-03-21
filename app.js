@@ -7,7 +7,6 @@ var session = require('express-session');
 var uuid = require('uuid');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -43,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
 
 // handler for login request
 // at the moment it does nothing

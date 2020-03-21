@@ -4,10 +4,21 @@ const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'test';
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+/* GET login page. */
+router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Express' });
 });
+
+// GET home page
+router.get('/homepage', function (req, res) {
+  res.render('homepage');
+});
+
+router.get('/addcandidate', (req, res) => {
+  res.render('addcandidate');
+});
+
+
 
 // NOTE: needs to be updated to work with mongoDB api
 // https://www.npmjs.com/package/mongodb
@@ -43,12 +54,6 @@ router.get('/candidates', (req, res) => {
 
   });
 });
-
-router.get('/homepage', function (req, res) {
-  res.render('homepage');
-});
-
-router.get('/addCandidate')
 
 
 module.exports = router;

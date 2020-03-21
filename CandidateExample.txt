@@ -5,29 +5,29 @@ db.candidateList.insert({
     "DoB" : new Date("Jan 24, 1997"),
     "Email" : "email@email.com",
     "Phone Number" : 07913636099,
+    "Candidate Type" : "Internal",
+    "Date Entered Candidacy" : new Date("Dec 25, 2018"),
     "Community" : {
         "Patron Saint" : "John Baptist",
-	"Name" : "Thien Than",
-	"Address" : {
+        "Name" : "Thien Than",
+        "Phone" : "+12345678901"
+        "Address" : {
             "House Number" : 600,
             "Street" : "Xa Lo Ha Noi",
             "Ward" : "An Phu",
             "District" : "2",
             "City" : "Ho CHi Minh"
-	},
-	"Phone" : "+12345678901"
-    },   
+        },
+    },
+    "Date Entered Community" : new Date("Dec 25, 2018"),
     "Permanent Residence" : {
-	"Region" : "South"
+        "Region" : "South"
         "House Number" : 600,
         "Street" : "Xa Lo Ha Noi",
         "Ward" : "An Phu",
         "District" : "2",
         "City" : "Ho CHi Minh"
     },
-    "Candidate Type" : "Internal",
-    "Date Entered Candidacy" : new Date("Dec 25, 2018"),
-    "Date Entered Community" : new Date("Dec 25, 2018"),
     "Formator" : {
         "Patron Saint" : "Peter",
         "Surname + Middlename" : "Philip",
