@@ -37,9 +37,9 @@ router.get('/addcandidate', (req, res) => {
         communityNames = communityNames + '<option>' + objArray[i] + '</option>\n';
       }
 
-      console.log(communityNames.trim());
+      // console.log(communityNames);
 
-      res.render('addcandidate', { communityRecords: communityNames });
+      res.render('addcandidate', { communityRecords: 'Thien Than' });//communityNames });
     });
 
   });
@@ -50,33 +50,6 @@ router.get('/addcandidate', (req, res) => {
 // NOTE: needs to be updated to work with mongoDB api
 // https://www.npmjs.com/package/mongodb
 router.post('/addcandidate', (req, res) => {
-  let communityAddress="";
-  MongoClient.connect(url, (err, client) => {
-    
-    if (err) {
-      console.log(err);
-      res.render('homepage');
-    }
-    const db = client.db(dbName);
-    let communities = db.collection('communities');
-    communities.find({}).toArray((err, communityRecords) => {
-      client.close();
-
-      let objArray = [];
-
-      for(let i in communityRecords){
-        let eachCommunity = communityRecords[i];
-        for(let attribute in eachCommunity){
-          if(eachCommunity[attribute] === req.body.community){
-            console.log(communityAddress + "FSDFSDFSFSDFS")
-            console.log(eachCommunity + "FSDFSDFSFSDFS")
-            communityAddress =  JSON.stringify(eachCommunity)
-          }
-        }
-      }
-    });
-  });
-  console.log(communityAddress + " hittttttttt")
   let newCandidate = {
     "patronSaint": req.body.patronSaint,
     "surnameMiddlename": req.body.surnameMiddlename,
@@ -100,29 +73,41 @@ router.post('/addcandidate', (req, res) => {
       "city1": req.body.city1,
       "region": req.body.region
     }],
-    "communityAddress": [{
-     communityAddress
-    }]
-    
+    "communityAddress": [{}] 
   };
+
   MongoClient.connect(url, (err, client) => {
     if (err) {
-      res.send(err);
+      console.log(err);
+      res.render('homepage');
     }
     const db = client.db(dbName);
-    console.log(newCandidate);
-    // add code here to insert into database
-    
-    let candidates = db.collection('candidates');
-
-    const result = candidates.insertOne(newCandidate, {}, (error, result) => {
-      if(error){
-        console.log(error.message);
+    let communities = db.collection('communities');
+    communities.find({}).toArray((err, communityRecords) => {
+      
+      for(let i in communityRecords){
+        let eachCommunity = communityRecords[i];
+        for(let attribute in eachCommunity){
+          let com = String(req.body.community);
+          if(eachCommunity[attribute] <= com && eachCommunity[attribute] >= com ){
+            console.log("hit")
+            let array=[];
+            array.push(eachCommunity)
+            newCandidate.communityAddress = array;
+          }
+        }
       }
-    });
+      let candidates = db.collection('candidates');
 
-    client.close();
-    res.redirect("candidates");
+      const result = candidates.insertOne(newCandidate, {}, (error, result) => {
+        if(error){
+          console.log(error.message);
+        }
+      });
+
+      client.close();
+      res.redirect("candidates");
+    });
   });
   
 });
