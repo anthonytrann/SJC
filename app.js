@@ -15,15 +15,15 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'test';
 
 // session set up
-app.use(session({
-  genid: function (req) {
-    return uuid() // use UUIDs for session IDs
-  },
-  secret: 'some-secret',
-  cookie: {
-    maxAge: 60000
-  }
-}));
+// app.use(session({
+//   // genid: function (req) {
+//   //   return uuid() // use UUIDs for session IDs
+//   // },
+//   secret: 'some-secret',
+//   cookie: {
+//     maxAge: 60000
+//   }
+// }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

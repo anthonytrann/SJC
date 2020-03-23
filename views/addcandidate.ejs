@@ -16,7 +16,7 @@
   <% include navbar.ejs %>
 
   <div class="jumbotron">
-    <form>
+    <form method="post">
 
       <div class="form-row">
         <div class="form-group col-md-4">
@@ -101,7 +101,7 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
           <label for="permanentAddress">Permanent Address</label>
           <div class="form-group" id="permanentAddress">
             <div class="form-row">
@@ -139,8 +139,15 @@
           </div>
         </div>
 
-        <div class="col-sm-6">
-          <label for="communityAddress">Community Address</label>
+        <div class="col-md-6">
+          <div class="form-group col-md-12">
+            <label for="inputCommunity">Community</label>
+            <select id="inputCommunity" class="form=control" name="community">
+              <option selected>Select a Community</option>
+              <option><%= communityRecords %></option>
+            </select>
+          </div>
+          <!-- <label for="communityAddress">Community Address</label>
           <div class="form-group" id="communityAddress">
             <div class="form-row">
               <div class="form-group col-md-4">
@@ -180,7 +187,7 @@
                 <input type="text" class="form-control" id="inputCity2" name="city2">
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
