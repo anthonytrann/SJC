@@ -39,7 +39,7 @@ router.get('/addcandidate', (req, res) => {
 
       console.log(communityNames.trim());
 
-      res.render('addcandidate', { communityRecords: 'Thien Than' });
+      res.render('addcandidate', { communityRecords: communityNames });
     });
 
   });
@@ -75,7 +75,6 @@ router.post('/addcandidate', (req, res) => {
         }
       }
     });
-
   });
   console.log(communityAddress + " hittttttttt")
   let newCandidate = {
