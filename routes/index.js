@@ -37,9 +37,7 @@ router.get('/addcandidate', (req, res) => {
         communityNames = communityNames + '<option>' + objArray[i] + '</option>\n';
       }
 
-      // console.log(communityNames);
-
-      res.render('addcandidate', { communityRecords: 'Thien Than' });//communityNames });
+      res.render('addcandidate', { communityRecords: communityNames });
     });
 
   });
@@ -73,7 +71,7 @@ router.post('/addcandidate', (req, res) => {
       "city1": req.body.city1,
       "region": req.body.region
     }],
-    "communityAddress": [{}] 
+    "communityAddress": {}
   };
 
   MongoClient.connect(url, (err, client) => {
@@ -90,7 +88,7 @@ router.post('/addcandidate', (req, res) => {
         for(let attribute in eachCommunity){
           let com = String(req.body.community);
           if(eachCommunity[attribute] <= com && eachCommunity[attribute] >= com ){
-            console.log("hit")
+            // console.log("hit")
             let array=[];
             array.push(eachCommunity)
             newCandidate.communityAddress = array;
@@ -122,7 +120,38 @@ router.get('/candidates', (req, res) => {
     let candidates = db.collection('candidates');
     candidates.find({}).toArray((err, candidateRecords) => {
       client.close();
-      res.render('candidates', { candidateRecords: candidateRecords.map(row => JSON.stringify(row)) })
+      // console.log(candidateRecords)
+
+      let count = 1;
+      let tableRow = ""
+      let value=""
+      
+      for(let index in candidateRecords){
+        let eachCandidate = candidateRecords[index];
+        tableRow =  tableRow + "<tr>\n<th scope=\"row\">" + count + "</th>\n";
+        for (let attribute in eachCandidate) {
+          if(attribute != '_id'){
+            // console.log(eachCandidate[attribute])
+            value = eachCandidate[attribute];
+            if(attribute == "permanentAddress"){
+              value = value[0]['region'];
+            } else if(attribute == "communityAddress"){
+              console.log(value[0])
+              console.log("hitttttttttttttt")
+              if(value[0]) {
+                value = value[0]['communityName'];
+              } else {
+                value = "";
+              }
+            }
+
+            tableRow = tableRow + "<td>" + value + "</td>\n";
+          }
+        }
+        tableRow = tableRow + "</tr>\n"
+        count++
+      }
+      res.render('candidates', { candidateRecords: tableRow});
     });
 
   });

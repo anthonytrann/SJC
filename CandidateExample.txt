@@ -1,48 +1,45 @@
-db.candidateList.insert({
-    "Patron Saint" : "Ignatius",
-    "Surname + Middlename" : "Smith Joe",
-    "Firstname" : "Bob",
-    "DoB" : new Date("Jan 24, 1997"),
-    "Email" : "email@email.com",
-    "Phone Number" : 07913636099,
-    "Candidate Type" : "Internal",
-    "Date Entered Candidacy" : new Date("Dec 25, 2018"),
-    "Community" : {
-        "Patron Saint" : "John Baptist",
-        "Name" : "Thien Than",
-        "Phone" : "+12345678901"
-        "Address" : {
-            "House Number" : 600,
-            "Street" : "Xa Lo Ha Noi",
-            "Ward" : "An Phu",
-            "District" : "2",
-            "City" : "Ho CHi Minh"
-        },
-    },
-    "Date Entered Community" : new Date("Dec 25, 2018"),
-    "Permanent Residence" : {
-        "Region" : "South"
-        "House Number" : 600,
-        "Street" : "Xa Lo Ha Noi",
-        "Ward" : "An Phu",
-        "District" : "2",
-        "City" : "Ho CHi Minh"
-    },
-    "Formator" : {
-        "Patron Saint" : "Peter",
-        "Surname + Middlename" : "Philip",
-        "Firstname" : "Jim"
-    },
-    "Spiritual Director" : {
-        "Patron Saint" : "Anthony",
-        "Surname + Middlename" : "Nguyen Lam",
-        "Firstname" : "Triem"
-    },
-    "Specialisation" : "Computer Science",
-    "Current Education" : "Graduate"
-})
+{
+        "_id" : ObjectId("5e7a19077435de3638c9fae1"),
+        "patronSaint" : "test",
+        "surnameMiddlename" : "test",
+        "firstname" : "test",
+        "dob" : "2020-03-01",
+        "email" : "test@t.t",
+        "phoneNumber" : "test",
+        "university" : "test",
+        "major" : "test",
+        "educationStatus" : "Graduated",
+        "formator" : "test",
+        "spiritualDirector" : "test",
+        "candidacyType" : "Exterior",
+        "candidacyDate" : "2020-03-03",
+        "communityDate" : "2020-03-03",
+        "permanentAddress" : [
+                {
+                        "houseNumber1" : "test",
+                        "street1" : "test",
+                        "ward1" : "test",
+                        "district1" : "test",
+                        "city1" : "test",
+                        "region" : "Northern"
+                }
+        ],
+        "communityAddress" : [
+                {
+                        "_id" : ObjectId("5e7856085d43afdcbf5c2f4a"),
+                        "communityName" : "Thien Than",
+                        "communitySaint" : "John Baptist",
+                        "communityPhone" : "+12345678901",
+                        "houseNumber2" : "600",
+                        "street2" : "Xa Lo Ha Noi",
+                        "ward2" : "An Phu",
+                        "district2" : "2",
+                        "city2" : "Ho Chi Minh City"
+                }
+        ]
+}
 
-    {
+{
         "communityName": "Thien Than2",
         "communitySaint": "John Baptist",
         "communityPhone": "+12345678901",
@@ -51,4 +48,4 @@ db.candidateList.insert({
         "ward2": "An Phu",
         "district2": "2",
         "city2": "Ho Chi Minh City"
-    }
+}
