@@ -9,10 +9,87 @@ router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
+
 // GET home page
 router.get('/homepage', function (req, res) {
   res.render('homepage');
 });
+
+router.get('/communities', (req, res) => {
+  MongoClient.connect(url, (err, client) => {
+    let communityNames = '';
+    if (err) {
+      console.log(err);
+      res.render('homepage');
+    }
+    const db = client.db(dbName);
+    let communities = db.collection('communities');
+    communities.find({}).toArray((err, communityRecords) => {
+      client.close();
+
+      let objArray = [];
+      for(let i in communityRecords){
+        let community = communityRecords[i];
+        objArray.push(community.communityName);
+      }
+
+      communityNames = communityNames + '<a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-profile" aria-selected="false">' + objArray[0] + '</a>\n';
+
+      for(let i=1; i<objArray.length; i++){
+        communityNames = communityNames + '<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-profile" aria-selected="false">' + objArray[i] + '</a>\n';
+      }
+
+      res.render('communities', { communityNames: communityNames });
+    });
+  });
+});
+
+
+router.get('/candidates', (req, res) => {
+  MongoClient.connect(url, (err, client) => {
+    if (err) {
+      console.log(err);
+      res.render('homepage');
+    }
+    const db = client.db(dbName);
+    let candidates = db.collection('candidates');
+    candidates.find({}).toArray((err, candidateRecords) => {
+      client.close();
+      // console.log(candidateRecords)
+
+      let count = 1;
+      let tableRow = ""
+      let value=""
+      
+      for(let index in candidateRecords){
+        let eachCandidate = candidateRecords[index];
+        tableRow =  tableRow + "<tr>\n<th scope=\"row\">" + count + "</th>\n";
+        for (let attribute in eachCandidate) {
+          if(attribute != '_id'){
+            // console.log(eachCandidate[attribute])
+            value = eachCandidate[attribute];
+            if(attribute == "permanentAddress"){
+              value = value[0]['region'];
+            } else if(attribute == "communityAddress"){
+              if(value[0]) {
+                value = value[0]['communityName'];
+              } else {
+                value = "";
+              }
+            }
+
+            tableRow = tableRow + "<td>" + value + "</td>\n";
+          }
+        }
+        tableRow = tableRow + "</tr>\n"
+        count++
+      }
+      res.render('candidates', { candidateRecords: tableRow});
+    });
+
+  });
+});
+
 
 router.get('/addcandidate', (req, res) => {
   MongoClient.connect(url, (err, client) => {
@@ -42,8 +119,6 @@ router.get('/addcandidate', (req, res) => {
 
   });
 });
-
-
 
 // NOTE: needs to be updated to work with mongoDB api
 // https://www.npmjs.com/package/mongodb
@@ -108,53 +183,6 @@ router.post('/addcandidate', (req, res) => {
     });
   });
   
-});
-
-router.get('/candidates', (req, res) => {
-  MongoClient.connect(url, (err, client) => {
-    if (err) {
-      console.log(err);
-      res.render('homepage');
-    }
-    const db = client.db(dbName);
-    let candidates = db.collection('candidates');
-    candidates.find({}).toArray((err, candidateRecords) => {
-      client.close();
-      // console.log(candidateRecords)
-
-      let count = 1;
-      let tableRow = ""
-      let value=""
-      
-      for(let index in candidateRecords){
-        let eachCandidate = candidateRecords[index];
-        tableRow =  tableRow + "<tr>\n<th scope=\"row\">" + count + "</th>\n";
-        for (let attribute in eachCandidate) {
-          if(attribute != '_id'){
-            // console.log(eachCandidate[attribute])
-            value = eachCandidate[attribute];
-            if(attribute == "permanentAddress"){
-              value = value[0]['region'];
-            } else if(attribute == "communityAddress"){
-              console.log(value[0])
-              console.log("hitttttttttttttt")
-              if(value[0]) {
-                value = value[0]['communityName'];
-              } else {
-                value = "";
-              }
-            }
-
-            tableRow = tableRow + "<td>" + value + "</td>\n";
-          }
-        }
-        tableRow = tableRow + "</tr>\n"
-        count++
-      }
-      res.render('candidates', { candidateRecords: tableRow});
-    });
-
-  });
 });
 
 
