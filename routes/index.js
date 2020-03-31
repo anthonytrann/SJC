@@ -17,7 +17,7 @@ router.get('/homepage', function (req, res) {
 
 router.get('/communities', (req, res) => {
   MongoClient.connect(url, (err, client) => {
-    let communityNames = '';
+    let communityInfo = '';
     if (err) {
       console.log(err);
       res.render('homepage');
@@ -28,18 +28,36 @@ router.get('/communities', (req, res) => {
       client.close();
 
       let objArray = [];
-      for(let i in communityRecords){
-        let community = communityRecords[i];
-        objArray.push(community.communityName);
+      
+      if(communityRecords.length!=0){
+        let firstCommunity = communityRecords[0]
+        communityInfo = communityInfo + '<a class="nav-item nav-link active" id="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + firstCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + firstCommunity.communityName + '</a>\n';
+        
+        for( let i=1; i<communityRecords.length; i++){
+          let otherCommunity = communityRecords[i]
+          communityInfo = communityInfo + '<a class="nav-item nav-link" id="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + otherCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + otherCommunity.communityName + '</a>\n';
+        }
+        communityInfo = communityInfo + '</div>\n</nav>\n<div class="tab-content" id="nav-tabContent">\n'
+        
+        communityInfo = communityInfo + '<div class="tab-pane fade show active" id="'+ firstCommunity.communityName.replace(/\s/g, '') + '" role="tabpanel" aria-labelledby="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab">\n' +
+        '<div class="form-row form-inline">\n' +
+        '<div class="form-group"' +
+        '<label for="input' + firstCommunity.communitySaint.replace(/\s/g, '') + '">Patron Saint: </label>\n' +
+        '<input type="text" class="form-control" id="input'+ firstCommunity.communitySaint.replace(/\s/g, '') + '" placeholder="' + firstCommunity.communitySaint + '" name="patronSaint" disabled>\n' +
+        '</div>' 
+
+        for( let i=1; i<communityRecords.length; i++){
+          let otherCommunity = communityRecords[i]
+          communityInfo = communityInfo + '<div class="tab-pane fade" id="'+ otherCommunity.communityName.replace(/\s/g, '') + '" role="tabpanel" aria-labelledby="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab">\n' +
+        '<div class="form-row form-inline">\n' +
+        '<div class="form-group"' +
+        '<label for="input' + otherCommunity.communitySaint.replace(/\s/g, '') + '">Patron Saint: </label>\n' +
+        '<input type="text" class="form-control" id="input'+ otherCommunity.communitySaint.replace(/\s/g, '') + '" placeholder="' + otherCommunity.communitySaint + '" name="patronSaint" disabled>\n' +
+        '</div>\n</div>\n' 
+        }
+        communityInfo = communityInfo + '</div>\n';
+        res.render('communities', { communityNames: communityInfo });
       }
-
-      communityNames = communityNames + '<a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-profile" aria-selected="false">' + objArray[0] + '</a>\n';
-
-      for(let i=1; i<objArray.length; i++){
-        communityNames = communityNames + '<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-profile" aria-selected="false">' + objArray[i] + '</a>\n';
-      }
-
-      res.render('communities', { communityNames: communityNames });
     });
   });
 });
