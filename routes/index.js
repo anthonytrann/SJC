@@ -6,12 +6,12 @@ const dbName = 'test';
 
 /* GET login page. */
 router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Express' });
+  res.render('login');
 });
 
 
 // GET home page
-router.get('/homepage', function (req, res) {
+router.get('/', function (req, res) {
   res.render('homepage');
 });
 
@@ -25,39 +25,28 @@ router.get('/communities', (req, res) => {
     const db = client.db(dbName);
     let communities = db.collection('communities');
     communities.find({}).toArray((err, communityRecords) => {
-      client.close();
+      
 
       let objArray = [];
       
-      if(communityRecords.length!=0){
-        let firstCommunity = communityRecords[0]
-        communityInfo = communityInfo + '<a class="nav-item nav-link active" id="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + firstCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + firstCommunity.communityName + '</a>\n';
+      // if(communityRecords.length!=0){
+      //   let firstCommunity = communityRecords[0]
+      //   communityInfo = communityInfo + '<a class="nav-item nav-link active" id="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + firstCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + firstCommunity.communityName + '</a>\n';
         
-        for( let i=1; i<communityRecords.length; i++){
-          let otherCommunity = communityRecords[i]
-          communityInfo = communityInfo + '<a class="nav-item nav-link" id="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + otherCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + otherCommunity.communityName + '</a>\n';
-        }
-        communityInfo = communityInfo + '</div>\n</nav>\n<div class="tab-content" id="nav-tabContent">\n'
+      //   for( let i=1; i<communityRecords.length; i++){
+      //     let otherCommunity = communityRecords[i]
+      //     communityInfo = communityInfo + '<a class="nav-item nav-link" id="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + otherCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + otherCommunity.communityName + '</a>\n';
+      //   }
+      //   communityInfo = communityInfo + '</div>\n</nav>\n<div class="tab-content" id="nav-tabContent">\n'
         
-        communityInfo = communityInfo + '<div class="tab-pane fade show active" id="'+ firstCommunity.communityName.replace(/\s/g, '') + '" role="tabpanel" aria-labelledby="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab">\n' +
-        '<div class="form-row form-inline">\n' +
-        '<div class="form-group"' +
-        '<label for="input' + firstCommunity.communitySaint.replace(/\s/g, '') + '">Patron Saint: </label>\n' +
-        '<input type="text" class="form-control" id="input'+ firstCommunity.communitySaint.replace(/\s/g, '') + '" placeholder="' + firstCommunity.communitySaint + '" name="patronSaint" disabled>\n' +
-        '</div>' 
-
-        for( let i=1; i<communityRecords.length; i++){
-          let otherCommunity = communityRecords[i]
-          communityInfo = communityInfo + '<div class="tab-pane fade" id="'+ otherCommunity.communityName.replace(/\s/g, '') + '" role="tabpanel" aria-labelledby="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab">\n' +
-        '<div class="form-row form-inline">\n' +
-        '<div class="form-group"' +
-        '<label for="input' + otherCommunity.communitySaint.replace(/\s/g, '') + '">Patron Saint: </label>\n' +
-        '<input type="text" class="form-control" id="input'+ otherCommunity.communitySaint.replace(/\s/g, '') + '" placeholder="' + otherCommunity.communitySaint + '" name="patronSaint" disabled>\n' +
-        '</div>\n</div>\n' 
-        }
-        communityInfo = communityInfo + '</div>\n';
-        res.render('communities', { communityNames: communityInfo });
-      }
+      let candidates = db.collection('candidates');
+      candidates.find({}).toArray((err, candidateRecords) => {
+        
+        console.log(candidateRecords);
+        res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords});
+      });
+        
+      
     });
   });
 });
@@ -108,6 +97,40 @@ router.get('/candidates', (req, res) => {
   });
 });
 
+router.get('/addcommunity', function (req, res) {
+  res.render('addcommunity');
+});
+
+router.post('/addcommunity', function (req, res) {
+  let newCommunity = {
+    "communityName": req.body.communityName,
+    "communitySaint": req.body.communitySaint,
+    "communityPhone": req.body.communityPhone,
+    "houseNumber2": req.body.houseNumber2,
+    "street2": req.body.street2,
+    "ward2": req.body.ward2,
+    "district2": req.body.district2,
+    "city2" : req.body.city2
+  };
+
+  MongoClient.connect(url, (err, client) => {
+    if (err) {
+      console.log(err);
+      res.render('homepage');
+    }
+    const db = client.db(dbName);
+    let communities = db.collection('communities');
+
+      const result = communities.insertOne(newCommunity, {}, (error, result) => {
+        if(error){
+          console.log(error.message);
+        }
+      });
+
+      client.close();
+      res.redirect("communities");
+    });
+});
 
 router.get('/addcandidate', (req, res) => {
   MongoClient.connect(url, (err, client) => {

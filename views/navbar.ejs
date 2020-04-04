@@ -16,31 +16,50 @@
 
             <!-- Home Link -->
             <li class="nav-item active">
-                <a class="nav-link" href="/homepage">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
 
-            <!-- Previous Candidates Link -->
+            <!-- Communities Link -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Ex-Candidates</a>
+                <a class="nav-link" href="/communities">Communities</a>
             </li>
 
-            <!-- Priest Info Dropdown -->
+            <!-- Candidates Link -->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkCandidates" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Priest Information
+                    Candidates
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkCandidates">
+                    <a class="dropdown-item" href="#">Interior</a>
+                    <a class="dropdown-item" href="#">Exterior</a>
+                    <a class="dropdown-item" href="#">Pre-Novice</a>
+                    <a class="dropdown-item" href="#">Ex-candidate</a>
+                </div>
+            </li>
+
+            <!-- Companions Info Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkCompanions" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Companions
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkCompanions">
+                    <a class="dropdown-item" href="#">Formators</a>
+                    <a class="dropdown-item" href="#">Spiritual Directors</a>
+                </div>
             </li>
 
             <!-- Add Person Dropdown-->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button"
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkAdd" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add Person
+                    Add
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="addcandidate">Candidate</a>
-                    <a class="dropdown-item" href="#">Priest</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkAdd">
+                    <a class="dropdown-item" href="/addcommunity">Community</a>
+                    <a class="dropdown-item" href="/addcandidate">Candidate</a>
+                    <a class="dropdown-item" href="#">Companion</a>
                 </div>
             </li>
 
