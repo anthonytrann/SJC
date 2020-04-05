@@ -3,6 +3,9 @@ let router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017';
 const dbName = 'test';
+const getDb = require("./database").getDb;
+// const initDb = require("./database").initDb;
+
 
 /* GET login page. */
 router.get('/login', function (req, res, next) {
@@ -16,84 +19,23 @@ router.get('/', function (req, res) {
 });
 
 router.get('/communities', (req, res) => {
-  MongoClient.connect(url, (err, client) => {
-    let communityInfo = '';
-    if (err) {
-      console.log(err);
-      res.render('homepage');
-    }
-    const db = client.db(dbName);
-    let communities = db.collection('communities');
-    communities.find({}).toArray((err, communityRecords) => {
-      
-
-      let objArray = [];
-      
-      // if(communityRecords.length!=0){
-      //   let firstCommunity = communityRecords[0]
-      //   communityInfo = communityInfo + '<a class="nav-item nav-link active" id="' + firstCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + firstCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + firstCommunity.communityName + '</a>\n';
-        
-      //   for( let i=1; i<communityRecords.length; i++){
-      //     let otherCommunity = communityRecords[i]
-      //     communityInfo = communityInfo + '<a class="nav-item nav-link" id="' + otherCommunity.communityName.replace(/\s/g, '') + '-tab" data-toggle="tab" href="#' + otherCommunity.communityName.replace(/\s/g, '') + '" role="tab" aria-controls="nav-profile" aria-selected="false">' + otherCommunity.communityName + '</a>\n';
-      //   }
-      //   communityInfo = communityInfo + '</div>\n</nav>\n<div class="tab-content" id="nav-tabContent">\n'
-        
-      let candidates = db.collection('candidates');
-      candidates.find({}).toArray((err, candidateRecords) => {
-        
-        console.log(candidateRecords);
-        res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords});
-      });
-        
-      
+  const db = getDb();
+  let communities = db.collection('communities');
+  let candidates = db.collection('candidates');
+  communities.find({}).toArray((err, communityRecords) => {
+    candidates.find({}).toArray((err, candidateRecords) => {
+      res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords});
     });
   });
 });
 
 
 router.get('/candidates', (req, res) => {
-  MongoClient.connect(url, (err, client) => {
-    if (err) {
-      console.log(err);
-      res.render('homepage');
-    }
-    const db = client.db(dbName);
-    let candidates = db.collection('candidates');
-    candidates.find({}).toArray((err, candidateRecords) => {
-      client.close();
-      // console.log(candidateRecords)
-
-      let count = 1;
-      let tableRow = ""
-      let value=""
-      
-      for(let index in candidateRecords){
-        let eachCandidate = candidateRecords[index];
-        tableRow =  tableRow + "<tr>\n<th scope=\"row\">" + count + "</th>\n";
-        for (let attribute in eachCandidate) {
-          if(attribute != '_id'){
-            // console.log(eachCandidate[attribute])
-            value = eachCandidate[attribute];
-            if(attribute == "permanentAddress"){
-              value = value[0]['region'];
-            } else if(attribute == "communityAddress"){
-              if(value[0]) {
-                value = value[0]['communityName'];
-              } else {
-                value = "";
-              }
-            }
-
-            tableRow = tableRow + "<td>" + value + "</td>\n";
-          }
-        }
-        tableRow = tableRow + "</tr>\n"
-        count++
-      }
-      res.render('candidates', { candidateRecords: tableRow});
-    });
-
+  const db = getDb();
+  let candidates = db.collection('candidates');
+  candidates.find({}).toArray((err, candidateRecords) => {
+    console.log(candidateRecords)
+    res.render('candidates', { candidateRecords: candidateRecords });
   });
 });
 
@@ -113,51 +55,26 @@ router.post('/addcommunity', function (req, res) {
     "city2" : req.body.city2
   };
 
-  MongoClient.connect(url, (err, client) => {
-    if (err) {
-      console.log(err);
-      res.render('homepage');
+  const db = getDb();
+  let communities = db.collection('communities');
+  communities.insertOne(newCommunity, {}, (error, result) => {
+    if(error){
+      console.log(error.message);
     }
-    const db = client.db(dbName);
-    let communities = db.collection('communities');
-
-      const result = communities.insertOne(newCommunity, {}, (error, result) => {
-        if(error){
-          console.log(error.message);
-        }
-      });
-
-      client.close();
-      res.redirect("communities");
-    });
+  });
+  res.redirect("communities");
 });
 
 router.get('/addcandidate', (req, res) => {
-  MongoClient.connect(url, (err, client) => {
-    let communityNames = '';
-    if (err) {
-      console.log(err);
-      res.render('homepage');
+  const db = getDb();
+  let communities = db.collection('communities');
+  let objArray = [];
+  communities.find({}).toArray((err, communityRecords) => {
+    for(let i in communityRecords){
+      let community = communityRecords[i];
+      objArray.push(community.communityName);
     }
-    const db = client.db(dbName);
-    let communities = db.collection('communities');
-    communities.find({}).toArray((err, communityRecords) => {
-      client.close();
-      // console.log(communityRecords);
-      let objArray = [];
-
-      for(let i in communityRecords){
-        let community = communityRecords[i];
-        objArray.push(community.communityName);
-      }
-
-      for(let i=0; i<objArray.length; i++){
-        communityNames = communityNames + '<option>' + objArray[i] + '</option>\n';
-      }
-
-      res.render('addcandidate', { communityRecords: communityNames });
-    });
-
+    res.render('addcandidate', { communityNames: objArray });
   });
 });
 
@@ -190,40 +107,28 @@ router.post('/addcandidate', (req, res) => {
     "communityAddress": {}
   };
 
-  MongoClient.connect(url, (err, client) => {
-    if (err) {
-      console.log(err);
-      res.render('homepage');
-    }
-    const db = client.db(dbName);
-    let communities = db.collection('communities');
-    communities.find({}).toArray((err, communityRecords) => {
-      
-      for(let i in communityRecords){
-        let eachCommunity = communityRecords[i];
-        for(let attribute in eachCommunity){
-          let com = String(req.body.community);
-          if(eachCommunity[attribute] <= com && eachCommunity[attribute] >= com ){
-            // console.log("hit")
-            let array=[];
-            array.push(eachCommunity)
-            newCandidate.communityAddress = array;
-          }
+  const db = getDb();
+  let communities = db.collection('communities');
+  communities.find({}).toArray((err, communityRecords) => {
+    for(let i in communityRecords){
+      let eachCommunity = communityRecords[i];
+      for(let attribute in eachCommunity){
+        let com = String(req.body.community);
+        if(eachCommunity[attribute] <= com && eachCommunity[attribute] >= com ){
+          let array=[];
+          array.push(eachCommunity)
+          newCandidate.communityAddress = array;
         }
       }
-      let candidates = db.collection('candidates');
-
-      const result = candidates.insertOne(newCandidate, {}, (error, result) => {
-        if(error){
-          console.log(error.message);
-        }
-      });
-
-      client.close();
-      res.redirect("candidates");
+    }
+    let candidates = db.collection('candidates');
+    candidates.insertOne(newCandidate, {}, (error, result) => {
+      if(error){
+        console.log(error.message);
+      }
     });
+    res.redirect("candidates");
   });
-  
 });
 
 

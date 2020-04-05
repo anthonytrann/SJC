@@ -10,9 +10,23 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-const dbName = 'test';
+const initDb = require("./routes/database").initDb;
+const getDb = require("./routes/database").getDb;
+
+const port = 3001;
+
+
+initDb(function (err) {
+  app.listen(port, function (err) {
+      if (err) {
+          throw err; //
+      }
+      console.log("API Up and running on port " + port);
+  });
+});
+
+// const url = 'mongodb://localhost:27017';
+// const dbName = 'test';
 
 // session set up
 // app.use(session({

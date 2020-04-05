@@ -39,7 +39,33 @@
         </tr>
       </thead>
       <tbody>
-        <%- candidateRecords %>
+        <!-- <h1><%- candidateRecords %></h1> -->
+        <% for(let i=0; i<candidateRecords.length; i++) { %>
+          <tr>
+            <th scope="row"><%= i+1 %></th>
+            <% let candidate = candidateRecords[i]; %>
+            <td><%= candidate.patronSaint %></td>
+            <td><%= candidate.surnameMiddlename %></td>
+            <td><%= candidate.firstname %></td>
+            <td><%= candidate.dob %></td>
+            <td><%= candidate.email %></td>
+            <td><%= candidate.phoneNumber %></td>
+            <td><%= candidate.university %></td>
+            <td><%= candidate.major %></td>
+            <td><%= candidate.educationStatus %></td>
+            <td><%= candidate.formator %></td>
+            <td><%= candidate.spritualDirector %></td>
+            <td><%= candidate.candidacyType %></td>
+            <td><%= candidate.candidacyDate %></td>
+            <td><%= candidate.communityDate %></td>
+            <td><%= candidate.permanentAddress[0].region %></td>
+            <% if(candidate.communityAddress[0] == undefined ) { console.log("failed") %>
+              <td></td>
+            <% } else { %>
+              <td><%= candidate.communityAddress[0].communityName %></td>
+            <% } %>
+          </tr>
+        <% } %>
       </tbody>
     </table>
   </div>

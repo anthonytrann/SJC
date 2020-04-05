@@ -144,7 +144,9 @@
             <label for="inputCommunity">Community</label>
             <select id="inputCommunity" class="form=control" name="community">
               <option selected>Select a Community</option>
-              <%- communityRecords %>
+              <% for (var i=0; i<communityNames.length; i++) { %>
+                <option><%= communityNames[i] %></option>
+              <% } %>
             </select>
           </div>  
         </div>
