@@ -1,0 +1,145 @@
+<html lang="en">
+
+<head>
+  <title>SJC Communities</title>
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+
+</head>
+<body class="text-center" data-gr-c-s-loaded="true"> 
+
+  <%- include navbar.ejs %>
+
+  <h1>Regional Permanent Address</h1>
+
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="northern-tab" data-toggle="tab" href="#northern" role="tab" aria-controls="northern" aria-selected="true">Northern</a>
+    <a class="nav-item nav-link" id="central-tab" data-toggle="tab" href="#central" role="tab" aria-controls="central" aria-selected="false">Central</a>
+    <a class="nav-item nav-link" id="southern-tab" data-toggle="tab" href="#southern" role="tab" aria-controls="southern" aria-selected="false">Southern</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="northern" role="tabpanel" aria-labelledby="northern-tab">
+      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Permanent Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let count = 0;
+              for (let i=0; i<candidateRecords.length; i++) {
+              if (candidateRecords[i].permanentAddress[0].region == "Northern") {
+                count++;
+                let candidate = candidateRecords[i]; %>
+                <tr>
+                  <th scope="row"><%= count %></th>
+                  <td><%= candidate.patronSaint %></td>
+                  <td><%= candidate.surnameMiddlename %></td>
+                  <td><%= candidate.firstname %></td>
+                  <td><%= candidate.email %></td>
+                  <td><%= candidate.phoneNumber %></td> 
+                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
+                  <td><% address %></td>
+                </tr>
+              <% }
+            } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="central" role="tabpanel" aria-labelledby="central-tab">
+      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Permanent Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% count = 0;
+              for (let i=0; i<candidateRecords.length; i++) {
+              if (candidateRecords[i].permanentAddress[0].region == "Central") {
+                count++;
+                let candidate = candidateRecords[i]; %>
+                <tr>
+                  <th scope="row"><%= count %></th>
+                  <td><%= candidate.patronSaint %></td>
+                  <td><%= candidate.surnameMiddlename %></td>
+                  <td><%= candidate.firstname %></td>
+                  <td><%= candidate.email %></td>
+                  <td><%= candidate.phoneNumber %></td> 
+                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
+                  <td><% address %></td>
+                </tr>
+              <% }
+            } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="southern" role="tabpanel" aria-labelledby="southern-tab">
+      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Permanent Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% count = 0;
+              for (let i=0; i<candidateRecords.length; i++) {
+              if (candidateRecords[i].permanentAddress[0].region == "Southern") {
+                count++;
+                let candidate = candidateRecords[i]; %>
+                <tr>
+                  <th scope="row"><%= count %></th>
+                  <td><%= candidate.patronSaint %></td>
+                  <td><%= candidate.surnameMiddlename %></td>
+                  <td><%= candidate.firstname %></td>
+                  <td><%= candidate.email %></td>
+                  <td><%= candidate.phoneNumber %></td> 
+                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
+                  <td><% address %></td>
+                </tr>
+              <% }
+            } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>

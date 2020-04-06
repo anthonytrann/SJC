@@ -12,7 +12,6 @@ router.get('/login', function (req, res, next) {
   res.render('login');
 });
 
-
 // GET home page
 router.get('/', function (req, res) {
   res.render('homepage');
@@ -29,13 +28,19 @@ router.get('/communities', (req, res) => {
   });
 });
 
-
 router.get('/candidates', (req, res) => {
   const db = getDb();
   let candidates = db.collection('candidates');
   candidates.find({}).toArray((err, candidateRecords) => {
-    console.log(candidateRecords)
     res.render('candidates', { candidateRecords: candidateRecords });
+  });
+});
+
+router.get('/addresses', (req, res) => {
+  const db = getDb();
+  let candidates = db.collection('candidates');
+  candidates.find({}).toArray((err, candidateRecords) => {
+    res.render('addresses', { candidateRecords : candidateRecords });
   });
 });
 
