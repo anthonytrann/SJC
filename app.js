@@ -11,7 +11,6 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 const initDb = require("./routes/database").initDb;
-const getDb = require("./routes/database").getDb;
 
 const port = 3001;
 
@@ -25,8 +24,6 @@ initDb(function (err) {
   });
 });
 
-// const url = 'mongodb://localhost:27017';
-// const dbName = 'test';
 
 // session set up
 // app.use(session({

@@ -23,11 +23,11 @@ function initDb(callback) {
   //   return callback(null, _db);
   // });
   
-  client.connect(url, { useNewUrlParser: true}, (err, db) => {
+  client.connect(url, { useNewUrlParser: true }, (err, db) => {
     if(err) {
       return console.log(err);
     }
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    console.log("Database connected")
     _db = db.db(dbName);
   });
 
