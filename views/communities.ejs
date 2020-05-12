@@ -2,12 +2,19 @@
 
 <head>
   <title>SJC Communities</title>
-  </style>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+  <!-- Custom styles for this template -->
   <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <style>
+    .material-icons {
+      vertical-align: -14%
+    }
+  </style>
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
@@ -21,12 +28,14 @@
       <% let firstComName = communityRecords[0].communityName.replace(/\s/g, '');
       let firstComTab = firstComName  + "Tab";
       let firstComHref = "#" + firstComName; %>
-      <a class="nav-item nav-link active" id=<%= firstComTab %> data-toggle="tab" href=<%= firstComHref %> role="tab" aria-controls=<%= firstComName %> aria-selected="true"><%= communityRecords[0].communityName %></a>
+      <a class="nav-item nav-link active" id=<%= firstComTab %> data-toggle="tab" href=<%= firstComHref %> role="tab"
+        aria-controls=<%= firstComName %> aria-selected="true"><%= communityRecords[0].communityName %></a>
       <% for(let i=1; i<communityRecords.length; i++) {
         let name =  communityRecords[i].communityName.replace(/\s/g, '');
         let idNameTab = name + "Tab";
-        let nameHref = "#" + name %> 
-        <a class="nav-item nav-link" id=<%= idNameTab %> data-toggle="tab" href=<%= nameHref %> role="tab" aria-controls=<%= name %> aria-selected="false"><%= communityRecords[i].communityName %></a>
+        let nameHref = "#" + name %>
+      <a class="nav-item nav-link" id=<%= idNameTab %> data-toggle="tab" href=<%= nameHref %> role="tab"
+        aria-controls=<%= name %> aria-selected="false"><%= communityRecords[i].communityName %></a>
       <% } %>
     </div>
   </nav>
@@ -55,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+      <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -75,129 +84,159 @@
               <th scope="col">Date Entered Candidacy</th>
               <th scope="col">Date Entered Community</th>
               <th scope="col">Regional address</th>
-              <th scope="col">Community</th>
             </tr>
           </thead>
           <tbody>
             <% let candidateArray = [];
             for (let i=0; i<candidateRecords.length; i++) {
-              if(candidateRecords[i].communityAddress != undefined && candidateRecords[i].communityAddress[0].communityName == communityRecords[0].communityName) {
+              let candi = candidateRecords[i];
+              if(candi.communityAddress[0].communityName === communityRecords[0].communityName ) {
                 candidateArray.push(candidateRecords[i]);
               }
             } 
             for (let i=0; i<candidateArray.length; i++) {
               let candidate = candidateArray[i]; %>
-              <tr>
-                <th scope="row"><%= i+1 %></th>
-                <td><%= candidate.patronSaint %></td>
-                <td><%= candidate.surnameMiddlename %></td>
-                <td><%= candidate.firstname %></td>
-                <td><%= candidate.dob %></td>
-                <td><%= candidate.email %></td>
-                <td><%= candidate.phoneNumber %></td>
-                <td><%= candidate.university %></td>
-                <td><%= candidate.major %></td>
-                <td><%= candidate.educationStatus %></td>
-                <td><%= candidate.formator %></td>
-                <td><%= candidate.spritualDirector %></td>
-                <td><%= candidate.candidacyType %></td>
-                <td><%= candidate.candidacyDate %></td>
-                <td><%= candidate.communityDate %></td>
-                <td><%= candidate.permanentAddress[0].region %></td>
+            <tr>
+              <th scope="row"><%= i+1 %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.dob %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <td><%= candidate.university %></td>
+              <td><%= candidate.major %></td>
+              <td><%= candidate.educationStatus %></td>
+              <td><%= candidate.formator %></td>
+              <td><%= candidate.spritualDirector %></td>
+              <td><%= candidate.candidacyType %></td>
+              <td><%= candidate.candidacyDate %></td>
+              <td><%= candidate.communityDate %></td>
+              <td><%= candidate.permanentAddress[0].region %></td>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
               <% } %>
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> 
     </div>
     <% for(let i=1; i<communityRecords.length; i++) {
       let name =  communityRecords[i].communityName.replace(/\s/g, '');
       let idNameTab = name + "Tab"; %>
-      <div class="tab-pane fade" id=<%= name %> role="tabpanel" aria-labelledby=<%= idNameTab %>>
-        <div>
-          <div class="card-deck">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Patron Saint</h5>
-                <p class="card-text"><%= communityRecords[i].communitySaint %></p>
-              </div>
+    <div class="tab-pane fade" id=<%= name %> role="tabpanel" aria-labelledby=<%= idNameTab %>>
+      <div>
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Patron Saint</h5>
+              <p class="card-text"><%= communityRecords[i].communitySaint %></p>
             </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Phone Number</h5>
-                <p class="card-text"><%= communityRecords[i].communityPhone %></p>
-              </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Phone Number</h5>
+              <p class="card-text"><%= communityRecords[i].communityPhone %></p>
             </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Community Address</h5>
-                <% let address = communityRecords[i].houseNumber2 + " " + communityRecords[i].street2 + ", " + communityRecords[i].ward2 + ", " + communityRecords[i].district2 + ", " + communityRecords[i].city2; %>
-                <p class="card-text"><%= address %></p>
-              </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Community Address</h5>
+              <% let address = communityRecords[i].houseNumber2 + " " + communityRecords[i].street2 + ", " + communityRecords[i].ward2 + ", " + communityRecords[i].district2 + ", " + communityRecords[i].city2; %>
+              <p class="card-text"><%= address %></p>
             </div>
           </div>
         </div>
-        <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Patron Saint</th>
-                <th scope="col">Surname + Middlename</th>
-                <th scope="col">Firstname</th>
-                <th scope="col">DoB</th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">University</th>
-                <th scope="col">Specialised Major</th>
-                <th scope="col">Education Status</th>
-                <th scope="col">Formator</th>
-                <th scope="col">Spiritual Director</th>
-                <th scope="col">Candidacy Type</th>
-                <th scope="col">Date Entered Candidacy</th>
-                <th scope="col">Date Entered Community</th>
-                <th scope="col">Regional address</th>
-                <th scope="col">Community</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% let candidateArray = [];
+      </div>
+      <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">DoB</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">University</th>
+              <th scope="col">Specialised Major</th>
+              <th scope="col">Education Status</th>
+              <th scope="col">Formator</th>
+              <th scope="col">Spiritual Director</th>
+              <th scope="col">Candidacy Type</th>
+              <th scope="col">Date Entered Candidacy</th>
+              <th scope="col">Date Entered Community</th>
+              <th scope="col">Regional address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let candidateArray = [];
               for (let j=0; j<candidateRecords.length; j++) {
-                if(candidateRecords[j].communityAddress != undefined && candidateRecords[j].communityAddress[0].communityName == communityRecords[i].communityName) {
+                candi = candidateRecords[j];
+                if(candi.communityAddress[0].communityName === communityRecords[i].communityName ) {
                   candidateArray.push(candidateRecords[j]);
                 }
               } 
               for (let k=0; k<candidateArray.length; k++) {
                 let candidate = candidateArray[k]; %>
-                <tr>
-                  <th scope="row"><%= k+1 %></th>
-                  <td><%= candidate.patronSaint %></td>
-                  <td><%= candidate.surnameMiddlename %></td>
-                  <td><%= candidate.firstname %></td>
-                  <td><%= candidate.dob %></td>
-                  <td><%= candidate.email %></td>
-                  <td><%= candidate.phoneNumber %></td>
-                  <td><%= candidate.university %></td>
-                  <td><%= candidate.major %></td>
-                  <td><%= candidate.educationStatus %></td>
-                  <td><%= candidate.formator %></td>
-                  <td><%= candidate.spiritualDirector %></td>
-                  <td><%= candidate.candidacyType %></td>
-                  <td><%= candidate.candidacyDate %></td>
-                  <td><%= candidate.communityDate %></td>
-                  <td><%= candidate.permanentAddress[0].region %></td>
-                </tr>
-              <% } %>
-            </tbody>
-          </table>
-        </div>
+            <tr>
+              <th scope="row"><%= k+1 %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.dob %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <td><%= candidate.university %></td>
+              <td><%= candidate.major %></td>
+              <td><%= candidate.educationStatus %></td>
+              <td><%= candidate.formator %></td>
+              <td><%= candidate.spiritualDirector %></td>
+              <td><%= candidate.candidacyType %></td>
+              <td><%= candidate.candidacyDate %></td>
+              <td><%= candidate.communityDate %></td>
+              <td><%= candidate.permanentAddress[0].region %></td>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
       </div>
+    </div>
     <% } %>
   </div>
+  
+  <script>
+    $(document).ready(function () {
+      $('.delete').click(function (e) {
+        // do something when delete button is clicked
+        let result = confirm("Please confirm you want to delete the candidate?");
+        if (result) {
+          let _id = this.id.replace('Delete', '')
+          location.reload();
+          $.ajax({
+            url: '/candidates/' + _id,
+            type: 'DELETE',
+            success: function (result) {}
+          }); 
+        }
+      });
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
+      $('.update').click(function(e){
+        let _id = this.id.replace('Edit', '');
+        window.location.pathname = '/updatecandidate/' + _id;
+      });
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>

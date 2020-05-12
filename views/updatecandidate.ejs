@@ -1,0 +1,267 @@
+<html lang="en">
+
+<head>
+  <title>SJC Add Candidate</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Custom styles for this template -->
+  <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <style>
+    .material-icons {
+      vertical-align: -14%
+    }
+  </style>
+</head>
+
+<body class="text-center" data-gr-c-s-loaded="true">
+
+  <% include navbar.ejs %>
+
+  <div class="jumbotron">
+    <form method="post">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputSaint">Patron Saint: </label>
+          <input type="text" class="form-control" id="inputSaint" placeholder="Patron Saint" name="patronSaint"
+            value=<%= candidateFound.patronSaint %> required>
+          <div class="invalid-tooltip">
+            Please enter a parton saint
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputSurnameMiddlename">Surname and Middlename: </label>
+          <input type="text" class="form-control" id="inputSurnameMiddlename" placeholder="Surname + Middlename"
+            name="surnameMiddlename" value=<%= candidateFound.surnameMiddlename %> required>
+          <div class="invalid-tooltip">
+            Please enter a surname and middlename
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputFirstname">Firstname: </label>
+          <input type="text" class="form-control" id="inputFirstname" placeholder="Firstname" name="firstname"
+            value=<%= candidateFound.firstname %> required>
+          <div class="invalid-tooltip">
+            Please enter a firstname
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4" data-enter="datepicker">
+          <label for="inputDob">Date of Birth</label>
+          <input type="date" class="form-control" id="inputDob" name="dob" value=<%= candidateFound.dob %> required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email"
+            value=<%= candidateFound.email %> required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPhone">Phone Number</label>
+          <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" name="phoneNumber"
+            value=<%= candidateFound.phoneNumber %> required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputUniversity">University</label>
+          <input type="text" class="form-control" id="inputUniversity" placeholder="University" name="university"
+            value=<%= candidateFound.university %> required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputMajor">Specialised Major</label>
+          <input type="text" class="form-control" id="inputMajor" placeholder="Specialised Major" name="major"
+            value=<%= candidateFound.major %> required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEducationStatus">Education Status</label>
+          <select id="inputEducationStatus" class="form-control" name="educationStatus"
+            value=<%= candidateFound.educationStatus %> </select> required>
+            <% let selectedEdStatus = candidateFound.educationStatus 
+            if(selectedEdStatus === 'Graduated') { %>
+            <option selected>Graduated</option>
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+            <% } else if(selectedEdStatus === 'Freshman') { %>
+            <option>Graduated</option>
+            <option selected>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+            <% } else if(selectedEdStatus === 'Sophomore') { %>
+            <option>Graduated</option>
+            <option>Freshman</option>
+            <option selected>Sophomore</option>
+            <option>Junior</option>
+            <option>Senior</option>
+            <% } else if(selectedEdStatus === 'Junior') { %>
+            <option>Graduated</option>
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option selected>Junior</option>
+            <option>Senior</option>
+            <% } else if(selectedEdStatus === 'Senior') { %>
+            <option>Graduated</option>
+            <option>Freshman</option>
+            <option>Sophomore</option>
+            <option>Junior</option>
+            <option selected>Senior</option>
+            <% } %>
+          </select>
+        </div>
+      </div>
+
+      <div class="row justify-content-around">
+        <div class="form-group col-md-4">
+          <label for="inputFormator">Formator</label>
+          <input type="text" class="form-control" id="inputFormator" placeholder="Formator" name="formator"
+            value=<%= candidateFound.formator %>>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputSpiritualDirector">Spiritual Director</label>
+          <input type="text" class="form-control" id="inputSpiritualDirector" placeholder="Spiritual Director"
+            name="spiritualDirector" value=<%= candidateFound.spiritualDirector %>>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="inputType">Candidacy Type</label>
+          <select id="inputType" class="form-control" name="candidacyType" required>
+            <% let typeSelected = candidateFound.candidacyType 
+            if(typeSelected === 'Exterior') { %>
+            <option selected>Exterior</option>
+            <option>Interior</option>
+            <option>Pre-Novice</option>
+            <option>Ex-Candidate</option>
+            <% } else if (typeSelected === 'Interior') { %>
+            <option>Exterior</option>
+            <option selected>Interior</option>
+            <option>Pre-Novice</option>
+            <option>Ex-Candidate</option>
+            <% } else if (typeSelected === 'Pre-Novice') { %>
+            <option>Exterior</option>
+            <option>Interior</option>
+            <option selected>Pre-Novice</option>
+            <option>Ex-Candidate</option>
+            <% } else if (typeSelected === 'Ex-Candidate') { %>
+            <option selected>Exterior</option>
+            <option>Interior</option>
+            <option>Pre-Novice</option>
+            <option>Ex-Candidate</option>
+            <% } %>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputCandidacyDate">Date Entered Candidacy</label>
+          <input type="date" class="form-control" id="inputCandidacyDate" name="candidacyDate"
+            value=<%= candidateFound.candidacyDate %> required>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputCommunityDate">Date Entered Community</label>
+          <input type="date" class="form-control" id="inputCommunityDate" name="communityDate"
+            value=<%= candidateFound.communityDate %>>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="inputPermanentAddress">Permanent Address</label>
+          <div class="form-group" id="inputPermanentAddress">
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="inputHouseNumber1">No.</label>
+                <input type="text" class="form-control" id="inputHouseNumber1" placeholder="House Number"
+                  name="houseNumber1" value=<%= candidateFound.permanentAddress[0].houseNumber1 %> required>
+              </div>
+              <div class="form-group col-md-10">
+                <label for="inputStreet1">Street</label>
+                <input type="text" class="form-control" id="inputStreet1" placeholder="Street Name" name="street1"
+                  value=<%= candidateFound.permanentAddress[0].street1 %> required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputWard1">Ward</label>
+                <input type="text" class="form-control" id="inputWard1" name="ward1"
+                  value=<%= candidateFound.permanentAddress[0].ward1 %> required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputDistrict1">District</label>
+                <input type="text" class="form-control" id="inputDistrict1" name="district1"
+                  value=<%= candidateFound.permanentAddress[0].district1 %> required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputCity1">City</label>
+                <input type="text" class="form-control" id="inputCity1" name="city1"
+                  value=<%= candidateFound.permanentAddress[0].city1 %> required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputRegion">Region</label>
+                <select id="inputRegion" class="form-control" name="region" required>
+                  <% let regionSelected = candidateFound.permanentAddress[0].region;
+                  if(regionSelected === 'Northern') { %>
+                  <option selected>Northern</option>
+                  <option>Central</option>
+                  <option>Southern</option>
+                  <% } else if(regionSelected === 'Central') {%>
+                  <option>Northern</option>
+                  <option selected>Central</option>
+                  <option>Southern</option>
+                  <% } else if(regionSelected === 'Southern') {%>
+                  <option>Northern</option>
+                  <option>Central</option>
+                  <option selected>Southern</option>
+                  <% } %>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group col-md-12">
+            <label for="inputCommunity">Community</label>
+            <select id="inputCommunity" class="form=control" name="community">
+              <% try { 
+                let selectedCommunity = candidateFound.communityAddress[0].communityName; %>
+                <option>Select a Community</option>
+                <% for (var i=0; i<communityNames.length; i++) {
+                  if( selectedCommunity === communityNames[i] ) { %>
+                    <option selected><%= communityNames[i] %></option>
+                  <% } else { %>
+                    <option><%= communityNames[i] %></option>
+                  <% }
+                } 
+              } catch(e) { %>
+                <option selected>Select a Community</option>
+                <% for (var i=0; i<communityNames.length; i++) { %>
+                  <option><%= communityNames[i] %></option>
+                <% }
+              } %> 
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="update" name=<%= candidateFound._id %> class="btn btn-primary">Update</button>
+    </form>
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>

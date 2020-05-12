@@ -1,5 +1,5 @@
 {
-        "_id" : ObjectId("5e7a19077435de3638c9fae1"),
+        // "_id" : ObjectId("5e7a19077435de3638c9fae1"),
         "patronSaint" : "test",
         "surnameMiddlename" : "test",
         "firstname" : "test",
@@ -26,7 +26,7 @@
         ],
         "communityAddress" : [
                 {
-                        "_id" : ObjectId("5e7856085d43afdcbf5c2f4a"),
+                        // "_id" : ObjectId("5e7856085d43afdcbf5c2f4a"),
                         "communityName" : "Thien Than",
                         "communitySaint" : "John Baptist",
                         "communityPhone" : "+12345678901",
@@ -37,15 +37,4 @@
                         "city2" : "Ho Chi Minh City"
                 }
         ]
-}
-
-{
-        "communityName": "Thien Than2",
-        "communitySaint": "John Baptist",
-        "communityPhone": "+12345678901",
-        "houseNumber2": "600",
-        "street2": "Xa Lo Ha Noi",
-        "ward2": "An Phu",
-        "district2": "2",
-        "city2": "Ho Chi Minh City"
 }

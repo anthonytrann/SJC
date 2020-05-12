@@ -2,81 +2,184 @@
 
 <head>
   <title>SJC Candidates</title>
-  </style>
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- Custom styles for this template -->
   <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
-  <!-- <link rel="stylesheet" type="text/css" href="stylesheets/styles.css" media="all" />
-  <link rel="stylesheet" type="text/css" href="stylesheets/demo.css" media="all" /> -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <style>
+    .material-icons {
+      vertical-align: -14%
+    }
+  </style>
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
 
   <%- include navbar.ejs %>
-
-    <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Patron Saint</th>
-          <th scope="col">Surname + Middlename</th>
-          <th scope="col">Firstname</th>
-          <th scope="col">DoB</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone Number</th>
-          <th scope="col">University</th>
-          <th scope="col">Specialised Major</th>
-          <th scope="col">Education Status</th>
-          <th scope="col">Formator</th>
-          <th scope="col">Spiritual Director</th>
-          <th scope="col">Candidacy Type</th>
-          <th scope="col">Date Entered Candidacy</th>
-          <th scope="col">Date Entered Community</th>
-          <th scope="col">Regional address</th>
-          <th scope="col">Community</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <h1><%- candidateRecords %></h1> -->
-        <% for(let i=0; i<candidateRecords.length; i++) { %>
-          <tr>
-            <th scope="row"><%= i+1 %></th>
-            <% let candidate = candidateRecords[i]; %>
-            <td><%= candidate.patronSaint %></td>
-            <td><%= candidate.surnameMiddlename %></td>
-            <td><%= candidate.firstname %></td>
-            <td><%= candidate.dob %></td>
-            <td><%= candidate.email %></td>
-            <td><%= candidate.phoneNumber %></td>
-            <td><%= candidate.university %></td>
-            <td><%= candidate.major %></td>
-            <td><%= candidate.educationStatus %></td>
-            <td><%= candidate.formator %></td>
-            <td><%= candidate.spiritualDirector %></td>
-            <td><%= candidate.candidacyType %></td>
-            <td><%= candidate.candidacyDate %></td>
-            <td><%= candidate.communityDate %></td>
-            <td><%= candidate.permanentAddress[0].region %></td>
-            <% if(candidate.communityAddress[0] == undefined ) { console.log("failed") %>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab"
+        aria-controls="active" aria-selected="true">Active</a>
+      <a class="nav-item nav-link" id="excandidate-tab" data-toggle="tab" href="#excandidate" role="tab"
+        aria-controls="excandidate" aria-selected="false">Ex-Candidate</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+      <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">DoB</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">University</th>
+              <th scope="col">Specialised Major</th>
+              <th scope="col">Education Status</th>
+              <th scope="col">Formator</th>
+              <th scope="col">Spiritual Director</th>
+              <th scope="col">Candidacy Type</th>
+              <th scope="col">Date Entered Candidacy</th>
+              <th scope="col">Date Entered Community</th>
+              <th scope="col">Regional address</th>
+              <th scope="col">Community</th>
+              <!-- <th class="deleteUsers" scope="col">Delete</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% let count = 0;
+            for(let i=0; i<activeArray.length; i++) { %>
+            <tr>
+              <% let candidate = activeArray[i]; 
+                count++; %>
+              <th scope="row"><%= count %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.dob %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <td><%= candidate.university %></td>
+              <td><%= candidate.major %></td>
+              <td><%= candidate.educationStatus %></td>
+              <td><%= candidate.formator %></td>
+              <td><%= candidate.spiritualDirector %></td>
+              <td><%= candidate.candidacyType %></td>
+              <td><%= candidate.candidacyDate %></td>
+              <td><%= candidate.communityDate %></td>
+              <td><%= candidate.permanentAddress[0].region %></td>
+              <% if(candidate.communityAddress[0] === undefined ) { %>
               <td></td>
-            <% } else { %>
+              <% } else { %>
               <td><%= candidate.communityAddress[0].communityName %></td>
+              <% } %>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
             <% } %>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade show" id="excandidate" role="tabpanel" aria-labelledby="excandidate-tab">
+      <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Patron Saint</th>
+              <th scope="col">Surname + Middlename</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">DoB</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">University</th>
+              <th scope="col">Specialised Major</th>
+              <th scope="col">Education Status</th>
+              <th scope="col">Formator</th>
+              <th scope="col">Spiritual Director</th>
+              <th scope="col">Candidacy Type</th>
+              <th scope="col">Date Entered Candidacy</th>
+              <th scope="col">Date Entered Community</th>
+              <th scope="col">Regional address</th>
+              <th scope="col">Community</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% count = 0;
+            for(let i=0; i<excandidateArray.length; i++) { %>
+            <tr>
+              <% let candidate = excandidateArray[i];
+                count++; %>
+              <th scope="row"><%= count %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.dob %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <td><%= candidate.university %></td>
+              <td><%= candidate.major %></td>
+              <td><%= candidate.educationStatus %></td>
+              <td><%= candidate.formator %></td>
+              <td><%= candidate.spiritualDirector %></td>
+              <td><%= candidate.candidacyType %></td>
+              <td><%= candidate.candidacyDate %></td>
+              <td><%= candidate.communityDate %></td>
+              <td><%= candidate.permanentAddress[0].region %></td>
+              <% if(candidate.communityAddress[0] === undefined ) { %>
+              <td></td>
+              <% } else { %>
+              <td><%= candidate.communityAddress[0].communityName %></td>
+              <% } %>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
+  <script>
+    $(document).ready(function () {
+      $('.delete').click(function (e) {
+        // do something when delete button is clicked
+        let result = confirm("Please confirm you want to delete the candidate?");
+        if (result) {
+          let _id = this.id.replace('Delete', '')
+          location.reload();
+          $.ajax({
+            url: '/candidates/' + _id,
+            type: 'DELETE',
+            success: function (result) {}
+          }); 
+        }
+      });
 
-  
+      $('.update').click(function(e){
+        let _id = this.id.replace('Edit', '');
+        window.location.pathname = '/updatecandidate/' + _id;
+      });
+    });
+  </script>
 
-
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>

@@ -2,14 +2,22 @@
 
 <head>
   <title>SJC Communities</title>
-  </style>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+  <!-- Custom styles for this template -->
   <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <style>
+    .material-icons {
+      vertical-align: -14%
+    }
+  </style>
 </head>
-<body class="text-center" data-gr-c-s-loaded="true"> 
+
+<body class="text-center" data-gr-c-s-loaded="true">
 
   <%- include navbar.ejs %>
 
@@ -17,9 +25,12 @@
 
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link active" id="northern-tab" data-toggle="tab" href="#northern" role="tab" aria-controls="northern" aria-selected="true">Northern</a>
-    <a class="nav-item nav-link" id="central-tab" data-toggle="tab" href="#central" role="tab" aria-controls="central" aria-selected="false">Central</a>
-    <a class="nav-item nav-link" id="southern-tab" data-toggle="tab" href="#southern" role="tab" aria-controls="southern" aria-selected="false">Southern</a>
+      <a class="nav-item nav-link active" id="northern-tab" data-toggle="tab" href="#northern" role="tab"
+        aria-controls="northern" aria-selected="true">Northern</a>
+      <a class="nav-item nav-link" id="central-tab" data-toggle="tab" href="#central" role="tab" aria-controls="central"
+        aria-selected="false">Central</a>
+      <a class="nav-item nav-link" id="southern-tab" data-toggle="tab" href="#southern" role="tab"
+        aria-controls="southern" aria-selected="false">Southern</a>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
@@ -39,21 +50,25 @@
           </thead>
           <tbody>
             <% let count = 0;
-              for (let i=0; i<candidateRecords.length; i++) {
+            for (let i=0; i<candidateRecords.length; i++) {
               if (candidateRecords[i].permanentAddress[0].region == "Northern") {
                 count++;
                 let candidate = candidateRecords[i]; %>
-                <tr>
-                  <th scope="row"><%= count %></th>
-                  <td><%= candidate.patronSaint %></td>
-                  <td><%= candidate.surnameMiddlename %></td>
-                  <td><%= candidate.firstname %></td>
-                  <td><%= candidate.email %></td>
-                  <td><%= candidate.phoneNumber %></td> 
-                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
-                  <td><% address %></td>
-                </tr>
-              <% }
+            <tr>
+              <th scope="row"><%= count %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <td><%= address %></td>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
+            <% }
             } %>
           </tbody>
         </table>
@@ -79,17 +94,21 @@
               if (candidateRecords[i].permanentAddress[0].region == "Central") {
                 count++;
                 let candidate = candidateRecords[i]; %>
-                <tr>
-                  <th scope="row"><%= count %></th>
-                  <td><%= candidate.patronSaint %></td>
-                  <td><%= candidate.surnameMiddlename %></td>
-                  <td><%= candidate.firstname %></td>
-                  <td><%= candidate.email %></td>
-                  <td><%= candidate.phoneNumber %></td> 
-                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
-                  <td><% address %></td>
-                </tr>
-              <% }
+            <tr>
+              <th scope="row"><%= count %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <td><%= address %></td>
+              <td>
+                <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
+            <% }
             } %>
           </tbody>
         </table>
@@ -111,21 +130,25 @@
           </thead>
           <tbody>
             <% count = 0;
-              for (let i=0; i<candidateRecords.length; i++) {
+            for (let i=0; i<candidateRecords.length; i++) {
               if (candidateRecords[i].permanentAddress[0].region == "Southern") {
                 count++;
                 let candidate = candidateRecords[i]; %>
-                <tr>
-                  <th scope="row"><%= count %></th>
-                  <td><%= candidate.patronSaint %></td>
-                  <td><%= candidate.surnameMiddlename %></td>
-                  <td><%= candidate.firstname %></td>
-                  <td><%= candidate.email %></td>
-                  <td><%= candidate.phoneNumber %></td> 
-                  <% let address = candidateRecords[i].permanentAddress[0].houseNumber1 + " " + candidateRecords[i].permanentAddress[0].street1 + ", " + candidateRecords[i].permanentAddress[0].ward1 + ", " + candidateRecords[i].permanentAddress[0].district1 + ", " + candidateRecords[i].permanentAddress[0].city1; %>
-                  <td><% address %></td>
-                </tr>
-              <% }
+            <tr>
+              <th scope="row"><%= count %></th>
+              <td><%= candidate.patronSaint %></td>
+              <td><%= candidate.surnameMiddlename %></td>
+              <td><%= candidate.firstname %></td>
+              <td><%= candidate.email %></td>
+              <td><%= candidate.phoneNumber %></td>
+              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <td><%= address %></td>
+              <td>
+                <button id=<%= candidate._id %>edit><i class="material-icons">edit</i></button>
+                <button class="delete" id=<%= candidate._id %>delete><i class="material-icons">delete</i></button>
+              </td>
+            </tr>
+            <% }
             } %>
           </tbody>
         </table>
@@ -133,9 +156,31 @@
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $('.delete').click(function (e) {
+        // do something when delete button is clicked
+        let result = confirm("Please confirm you want to delete the candidate?");
+        if (result) {
+          let _id = this.id.replace('Delete', '')
+          location.reload();
+          $.ajax({
+            url: '/candidates/' + _id,
+            type: 'DELETE',
+            success: function (result) {}
+          });         
+        }
+      });
+
+      $('.update').click(function(e){
+        let _id = this.id.replace('Edit', '');
+        window.location.pathname = '/updatecandidate/' + _id;
+      });
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>
