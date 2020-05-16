@@ -90,7 +90,7 @@
             <% let candidateArray = [];
             for (let i=0; i<candidateRecords.length; i++) {
               let candi = candidateRecords[i];
-              if(candi.communityAddress[0].communityName === communityRecords[0].communityName ) {
+              if(candi.communityAddress.communityName === communityRecords[0].communityName ) {
                 candidateArray.push(candidateRecords[i]);
               }
             } 
@@ -112,7 +112,7 @@
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
-              <td><%= candidate.permanentAddress[0].region %></td>
+              <td><%= candidate.permanentAddress.region %></td>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
                 <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
@@ -121,7 +121,7 @@
             </tr>
           </tbody>
         </table>
-      </div> 
+      </div>
     </div>
     <% for(let i=1; i<communityRecords.length; i++) {
       let name =  communityRecords[i].communityName.replace(/\s/g, '');
@@ -176,7 +176,7 @@
             <% let candidateArray = [];
               for (let j=0; j<candidateRecords.length; j++) {
                 candi = candidateRecords[j];
-                if(candi.communityAddress[0].communityName === communityRecords[i].communityName ) {
+                if(candi.communityAddress.communityName === communityRecords[i].communityName ) {
                   candidateArray.push(candidateRecords[j]);
                 }
               } 
@@ -198,7 +198,7 @@
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
-              <td><%= candidate.permanentAddress[0].region %></td>
+              <td><%= candidate.permanentAddress.region %></td>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
                 <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
@@ -211,7 +211,7 @@
     </div>
     <% } %>
   </div>
-  
+
   <script>
     $(document).ready(function () {
       $('.delete').click(function (e) {
@@ -221,14 +221,14 @@
           let _id = this.id.replace('Delete', '')
           location.reload();
           $.ajax({
-            url: '/candidates/' + _id,
+            url: '/deletecandidate/' + _id,
             type: 'DELETE',
-            success: function (result) {}
-          }); 
+            success: function (result) { }
+          });
         }
       });
 
-      $('.update').click(function(e){
+      $('.update').click(function (e) {
         let _id = this.id.replace('Edit', '');
         window.location.pathname = '/updatecandidate/' + _id;
       });

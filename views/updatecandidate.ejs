@@ -21,6 +21,8 @@
 
   <% include navbar.ejs %>
 
+  <h1>Update Candidate</h1>
+
   <div class="jumbotron">
     <form method="post">
       <div class="form-row">
@@ -179,34 +181,34 @@
               <div class="form-group col-md-2">
                 <label for="inputHouseNumber1">No.</label>
                 <input type="text" class="form-control" id="inputHouseNumber1" placeholder="House Number"
-                  name="houseNumber1" value=<%= candidateFound.permanentAddress[0].houseNumber1 %> required>
+                  name="houseNumber1" value=<%= candidateFound.permanentAddress.houseNumber1 %> required>
               </div>
               <div class="form-group col-md-10">
                 <label for="inputStreet1">Street</label>
                 <input type="text" class="form-control" id="inputStreet1" placeholder="Street Name" name="street1"
-                  value=<%= candidateFound.permanentAddress[0].street1 %> required>
+                  value=<%= candidateFound.permanentAddress.street1 %> required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputWard1">Ward</label>
                 <input type="text" class="form-control" id="inputWard1" name="ward1"
-                  value=<%= candidateFound.permanentAddress[0].ward1 %> required>
+                  value=<%= candidateFound.permanentAddress.ward1 %> required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputDistrict1">District</label>
                 <input type="text" class="form-control" id="inputDistrict1" name="district1"
-                  value=<%= candidateFound.permanentAddress[0].district1 %> required>
+                  value=<%= candidateFound.permanentAddress.district1 %> required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputCity1">City</label>
                 <input type="text" class="form-control" id="inputCity1" name="city1"
-                  value=<%= candidateFound.permanentAddress[0].city1 %> required>
+                  value=<%= candidateFound.permanentAddress.city1 %> required>
               </div>
               <div class="form-group col-md-6">
                 <label for="inputRegion">Region</label>
                 <select id="inputRegion" class="form-control" name="region" required>
-                  <% let regionSelected = candidateFound.permanentAddress[0].region;
+                  <% let regionSelected = candidateFound.permanentAddress.region;
                   if(regionSelected === 'Northern') { %>
                   <option selected>Northern</option>
                   <option>Central</option>
@@ -231,21 +233,21 @@
             <label for="inputCommunity">Community</label>
             <select id="inputCommunity" class="form=control" name="community">
               <% try { 
-                let selectedCommunity = candidateFound.communityAddress[0].communityName; %>
-                <option>Select a Community</option>
-                <% for (var i=0; i<communityNames.length; i++) {
+                let selectedCommunity = candidateFound.communityAddress.communityName; %>
+              <option>Select a Community</option>
+              <% for (var i=0; i<communityNames.length; i++) {
                   if( selectedCommunity === communityNames[i] ) { %>
-                    <option selected><%= communityNames[i] %></option>
-                  <% } else { %>
-                    <option><%= communityNames[i] %></option>
-                  <% }
+              <option selected><%= communityNames[i] %></option>
+              <% } else { %>
+              <option><%= communityNames[i] %></option>
+              <% }
                 } 
               } catch(e) { %>
-                <option selected>Select a Community</option>
-                <% for (var i=0; i<communityNames.length; i++) { %>
-                  <option><%= communityNames[i] %></option>
-                <% }
-              } %> 
+              <option selected>Select a Community</option>
+              <% for (var i=0; i<communityNames.length; i++) { %>
+              <option><%= communityNames[i] %></option>
+              <% }
+              } %>
             </select>
           </div>
         </div>

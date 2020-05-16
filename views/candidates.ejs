@@ -21,6 +21,9 @@
 <body class="text-center" data-gr-c-s-loaded="true">
 
   <%- include navbar.ejs %>
+
+  <h1>Candidates</h1>
+
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab"
@@ -76,11 +79,11 @@
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
-              <td><%= candidate.permanentAddress[0].region %></td>
-              <% if(candidate.communityAddress[0] === undefined ) { %>
+              <td><%= candidate.permanentAddress.region %></td>
+              <% if(candidate.communityAddress === undefined ) { %>
               <td></td>
               <% } else { %>
-              <td><%= candidate.communityAddress[0].communityName %></td>
+              <td><%= candidate.communityAddress.communityName %></td>
               <% } %>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
@@ -137,11 +140,11 @@
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
-              <td><%= candidate.permanentAddress[0].region %></td>
-              <% if(candidate.communityAddress[0] === undefined ) { %>
+              <td><%= candidate.permanentAddress.region %></td>
+              <% if(candidate.communityAddress=== undefined ) { %>
               <td></td>
               <% } else { %>
-              <td><%= candidate.communityAddress[0].communityName %></td>
+              <td><%= candidate.communityAddress.communityName %></td>
               <% } %>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
@@ -164,14 +167,14 @@
           let _id = this.id.replace('Delete', '')
           location.reload();
           $.ajax({
-            url: '/candidates/' + _id,
+            url: '/deletecandidate/' + _id,
             type: 'DELETE',
-            success: function (result) {}
-          }); 
+            success: function (result) { }
+          });
         }
       });
 
-      $('.update').click(function(e){
+      $('.update').click(function (e) {
         let _id = this.id.replace('Edit', '');
         window.location.pathname = '/updatecandidate/' + _id;
       });

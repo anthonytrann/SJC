@@ -40,16 +40,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="/companions">Companions</a>
             </li>
-            <!-- <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkCompanions" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Companions
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkCompanions">
-                    <a class="dropdown-item" href="#">Formators</a>
-                    <a class="dropdown-item" href="#">Spiritual Directors</a>
-                </div>
-            </li> -->
 
             <!-- Major link -->
             <li class="nav-item">
@@ -80,5 +70,47 @@
 
         </ul>
     </div>
+
+    <!-- Search form -->
+    <form id="searchForm" class="form-inline ml-auto">
+        <div class="md-form my-0">
+            <input id="searchInput" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                name="searchInput">
+        </div>
+        <div>
+            <label for="searchFilter" hidden>Search Filter</label>
+            <select id="searchFilter" class="form-control" name="searchFilter" required>
+                <option selected disabled>Search by ..</option>
+                <option>Candidate Name</option>
+                <option>Community Name</option>
+                <option disabled>Companion Name</option>
+                <option>University Name</option>
+                <option>City Name</option>
+            </select>
+        </div>
+        <button type="button" id="searchButton" onclick="search()"
+            class="btn btn-outline-white btn-md my-0 ml-sm-2">Search</button>
+    </form>
+    </div>
+    <!-- Collapsible content -->
+
+
+    <script>
+        function search() {
+
+            $.ajax({
+                url: '/search',
+                type: 'GET',
+                data: {
+                    searchFilter: $('#searchFilter').val(),
+                    searchValue: $('#searchInput').val()
+                },
+                // success: function (result) {
+                //     window.location.pathname = '/search'
+                // }
+            });
+        }
+
+    </script>
 
 </nav>

@@ -1,14 +1,9 @@
 let express = require('express');
 let router = express.Router();
-// const MongoClient = require('mongodb').MongoClient;
-// const url = 'mongodb://localhost:27017';
-// const dbName = 'test';
 const getDb = require("./database").getDb;
-// const initDb = require("./database").initDb;
 var ObjectId = require('mongodb').ObjectID;
-
-var path = require('path');
-
+var csvtojson = require('csvtojson');
+const formidableMiddleware = require('express-formidable');
 
 /* GET login page. */
 router.get('/login', function (req, res, next) {
@@ -25,8 +20,8 @@ router.get('/communities', (req, res) => {
   let communities = db.collection('communities');
   let candidates = db.collection('candidates');
   communities.find({}).toArray((err, communityRecords) => {
-    candidates.find({$and: [ {candidacyType : { $nin : ['Ex-Candidate'] } }, {communityAddress : {$nin : [{}]}} ] }).toArray((err, candidateRecords) => {
-      res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords});
+    candidates.find({ $and: [{ candidacyType: { $nin: ['Ex-Candidate'] } }, { communityAddress: { $nin: [{}] } }] }).toArray((err, candidateRecords) => {
+      res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords });
     });
   });
 });
@@ -38,126 +33,18 @@ router.get('/candidates', (req, res) => {
     let activeArray = [];
     let excandidateArray = [];
     candidateRecords.forEach(candidate => {
-      if(candidate.candidacyType != 'Ex-Candidate') {
-        activeArray.push(candidate);
-      } else {
+      if (candidate.candidacyType === 'Ex-Candidate') {
         excandidateArray.push(candidate);
-      }
-    });
-    res.render('candidates', { activeArray : activeArray, excandidateArray : excandidateArray });
-  });
-});
-
-router.delete('/candidates/:id', (req, res) => {
-  let id = req.params.id; 
-  const db = getDb();
-  let candidates = db.collection('candidates');
-
-  try{
-    candidates.findOneAndDelete({"_id" : ObjectId(id)}, (err, result) => {
-      if(err){
-        console.log("Did not delete")
       } else {
-        console.log("Deleted user id: " + id + " successfully")   
+        activeArray.push(candidate);
       }
     });
-  } catch(e) {
-    console.log(e);
-
-  }
-  
-});
-
-router.get('/updatecandidate/:id', (req, res) => {
-  let id = req.params.id;
-  const db = getDb();
-  let candidates = db.collection('candidates');
-  let communities = db.collection('communities');
-  try{
-    let communityNamesArray = []
-    communities.find({}).toArray((err, communityRecords) => {
-      for(let i in communityRecords){
-        let community = communityRecords[i];
-        communityNamesArray.push(community.communityName);
-      }
-      candidates.findOne({"_id" : ObjectId(id) })
-      .then(candidateFound => {
-        res.render('updatecandidate', {candidateFound : candidateFound, communityNames: communityNamesArray});
-      })
-    });    
-  } catch(e) {
-    console.log(e);
-    
-  }
-
-});
-
-router.post('/updatecandidate/:id',(req,res) => {
-  
-  let updatedcandidate = {
-    "patronSaint": req.body.patronSaint,
-    "surnameMiddlename": req.body.surnameMiddlename,
-    "firstname": req.body.firstname,
-    "dob": req.body.dob,
-    "email": req.body.email,
-    "phoneNumber": req.body.phoneNumber,
-    "university": req.body.university,
-    "major": req.body.major,
-    "educationStatus": req.body.educationStatus,
-    "formator": req.body.formator,
-    "spiritualDirector": req.body.spiritualDirector,
-    "candidacyType": req.body.candidacyType,
-    "candidacyDate": req.body.candidacyDate,
-    "communityDate": req.body.communityDate,
-    "permanentAddress": [{
-      "houseNumber1": req.body.houseNumber1,
-      "street1": req.body.street1,
-      "ward1": req.body.ward1,
-      "district1": req.body.district1,
-      "city1": req.body.city1,
-      "region": req.body.region
-    }],
-    "communityAddress": {}
-  };
-
-  const db = getDb();
-  let communities = db.collection('communities');
-  communities.find({}).toArray((err, communityRecords) => {
-    for(let i in communityRecords){
-      let perCommunity = communityRecords[i];
-      for(let attribute in perCommunity){
-        let selectedCommunity = String(req.body.community);
-        if(perCommunity[attribute] <= selectedCommunity && perCommunity[attribute] >= selectedCommunity ){
-          let array=[perCommunity];
-          
-          updatedcandidate.communityAddress = array;
-        }
-      }
-    }
-
-    try{
-      let candidates = db.collection('candidates');
-
-      let id = req.params.id;
-      console.log(updatedcandidate);
-      
-      candidates.findOneAndUpdate({"_id": ObjectId(id)}, {$set: updatedcandidate})
-      .then(result => {
-        console.log(result.result);
-        
-      })
-    } catch(e) {
-      console.log(e);
-      
-    }
-    
-    
-    res.redirect("../candidates");
+    res.render('candidates', { activeArray: activeArray, excandidateArray: excandidateArray });
   });
 });
 
 router.get('/companions', (req, res) => {
-  res.render('companions', {communityNames : []});
+  res.render('companions', { communityNames: [] });
 });
 
 router.get('/specializedmajor', (req, res) => {
@@ -165,13 +52,13 @@ router.get('/specializedmajor', (req, res) => {
   let candidates = db.collection('candidates');
   candidates.find({}).toArray((err, candidateRecords) => {
     let candidateArray = [];
-    candidateRecords.forEach( candidate => {
+    candidateRecords.forEach(candidate => {
       if (candidate.candidacyType != 'Ex-Candidate') {
-        if(candidateArray.length == 0) {
-          candidateArray.push({'uniName' : candidate.university, 'count' : 1, candidates: [candidate]});
+        if (candidateArray.length == 0) {
+          candidateArray.push({ 'uniName': candidate.university, 'count': 1, candidates: [candidate] });
         } else {
           let candidateUpdated = false;
-          for(let i = 0; i<candidateArray.length; i++){
+          for (let i = 0; i < candidateArray.length; i++) {
             let uni = candidateArray[i];
             if (uni.uniName === candidate.university) {
               uni.count = uni.count + 1;
@@ -180,34 +67,107 @@ router.get('/specializedmajor', (req, res) => {
               break;
             }
           }
-          if(!candidateUpdated){
-            candidateArray.push({'uniName' : candidate.university, 'count' : 1, candidates: [candidate]});
+          if (!candidateUpdated) {
+            candidateArray.push({ 'uniName': candidate.university, 'count': 1, candidates: [candidate] });
           }
-        } 
+        }
       }
     });
-    res.render('specializedmajor', {candidateArray : candidateArray});
-  }); 
+    res.render('specializedmajor', { candidateArray: candidateArray });
+  });
 });
 
 router.get('/addresses', (req, res) => {
   const db = getDb();
   let candidates = db.collection('candidates');
   candidates.find({}).toArray((err, candidateRecords) => {
-    res.render('addresses', { candidateRecords : candidateRecords });
+    res.render('addresses', { candidateRecords: candidateRecords });
   });
 });
 
-router.get('/candidatetypes',  (req, res) => {
+router.get('/candidatetypes', (req, res) => {
   const db = getDb();
   let candidates = db.collection('candidates');
   candidates.find({}).toArray((err, candidateRecords) => {
-    res.render('candidatetypes', {candidateRecords : candidateRecords });
+    res.render('candidatetypes', { candidateRecords: candidateRecords });
   });
 });
 
 router.get('/statistics', (req, res) => {
-  res.render('statistics');
+  const db = getDb();
+  let communities = db.collection('communities');
+  communities.find({}).toArray((err, communityRecords) => {
+    // res.send('<h1> testing</h1');
+    res.render('statistics', { communityRecords: communityRecords });
+
+  });
+});
+
+router.get('/search', (req, res) => {
+
+  let searchFilter = req.query.searchFilter;
+  let searchValue = req.query.searchValue;
+  const db = getDb();
+  console.log(searchFilter);
+  console.log(searchValue);
+
+  try {
+    if (searchFilter === 'Candidate Name' || searchFilter === 'University Name' || searchFilter === 'City Name') {
+      let candidates = db.collection('candidates');
+      if (searchFilter === 'Candidate Name') {
+        candidates.find({
+          $or:
+            [
+              { "firstname": searchValue },
+              { "surnameMiddlename": searchValue }
+            ]
+        }).toArray((err, searchRecords) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(searchRecords);
+            res.redirect('/search');
+          }
+        });
+      } else if (searchFilter === 'University Name') {
+        candidates.find({ "univeristy": searchValue }).toArray((err, searchRecords) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(searchRecords);
+            res.redirect('/search');
+          }
+        });
+      } else {
+        candidates.find({ "permanentAddress.city1": searchValue }).toArray((err, searchRecords) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(searchRecords);
+            res.redirect('/search');
+          }
+        });
+      }
+    } else if (searchFilter === 'Community Name') {
+      let communities = db.collection('communities');
+      communities.find({ communityName: searchValue }).toArray((err, searchRecords) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(searchRecords);
+          res.redirect('/search');
+        }
+      });
+    } else if (searchFilter === 'Companion Name') {
+      // searchFilter should be Companion Name
+      res.render('search', { searchRecords: "test" });
+    } else {
+      res.render('search', { searchRecords: "test" });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
 });
 
 router.get('/addcommunity', function (req, res) {
@@ -223,12 +183,12 @@ router.post('/addcommunity', (req, res) => {
     "street2": req.body.street2,
     "ward2": req.body.ward2,
     "district2": req.body.district2,
-    "city2" : req.body.city2
+    "city2": req.body.city2
   };
   const db = getDb();
   let communities = db.collection('communities');
   communities.insertOne(newCommunity, {}, (error, result) => {
-    if(error){
+    if (error) {
       console.log(error.message);
     }
   });
@@ -240,7 +200,7 @@ router.get('/addcandidate', (req, res) => {
   let communities = db.collection('communities');
   let objArray = [];
   communities.find({}).toArray((err, communityRecords) => {
-    for(let i in communityRecords){
+    for (let i in communityRecords) {
       let community = communityRecords[i];
       objArray.push(community.communityName);
     }
@@ -266,37 +226,173 @@ router.post('/addcandidate', (req, res) => {
     "candidacyType": req.body.candidacyType,
     "candidacyDate": req.body.candidacyDate,
     "communityDate": req.body.communityDate,
-    "permanentAddress": [{
+    "permanentAddress": {
       "houseNumber1": req.body.houseNumber1,
       "street1": req.body.street1,
       "ward1": req.body.ward1,
       "district1": req.body.district1,
       "city1": req.body.city1,
       "region": req.body.region
-    }],
+    },
     "communityAddress": {}
   };
   const db = getDb();
   let communities = db.collection('communities');
   communities.find({}).toArray((err, communityRecords) => {
-    for(let i in communityRecords){
+    for (let i in communityRecords) {
       let perCommunity = communityRecords[i];
-      for(let attribute in perCommunity){
+      for (let attribute in perCommunity) {
         let selectedCommunity = String(req.body.community);
-        if(perCommunity[attribute] <= selectedCommunity && perCommunity[attribute] >= selectedCommunity ){
-          let array=[perCommunity];
-          newCandidate.communityAddress = array;
+        if (perCommunity[attribute] <= selectedCommunity && perCommunity[attribute] >= selectedCommunity) {
+          newCandidate.communityAddress = perCommunity;
           break
         }
       }
     }
     let candidates = db.collection('candidates');
     candidates.insertOne(newCandidate, {}, (error, result) => {
-      if(error){
+      if (error) {
         console.log(error.message);
       }
     });
     res.redirect("candidates");
+  });
+});
+
+router.post('/addcandidate/import', formidableMiddleware(), (req, res) => {
+  // console.log(req.files);
+
+  csvtojson()
+    .fromFile(req.files.file.path)
+    .then(csvData => {
+      console.log(csvData);
+
+      const db = getDb();
+      let candidates = db.collection('candidates');
+      candidates.insertMany(csvData, (err, result) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        console.log("Inserted: " + result.insertedCount + " rows");
+        res.send({ message: "Inserted: " + result.insertedCount + " rows" })
+      });
+    });
+});
+
+router.delete('/deletecandidate/:id', (req, res) => {
+  let id = req.params.id;
+  const db = getDb();
+  let candidates = db.collection('candidates');
+
+  try {
+    candidates.findOneAndDelete({ "_id": ObjectId(id) }, (err, result) => {
+      if (err) {
+        console.log("Did not delete")
+      } else {
+        console.log("Deleted user id: " + id + " successfully")
+      }
+    });
+  } catch (e) {
+    console.log(e);
+
+  }
+
+});
+
+router.get('/updatecandidate/:id', (req, res) => {
+  let id = req.params.id;
+  const db = getDb();
+  let candidates = db.collection('candidates');
+  let communities = db.collection('communities');
+  try {
+    let communityNamesArray = []
+    communities.find({}).toArray((err, communityRecords) => {
+      for (let i in communityRecords) {
+        let community = communityRecords[i];
+        communityNamesArray.push(community.communityName);
+      }
+      candidates.findOne({ "_id": ObjectId(id) })
+        .then(candidateFound => {
+          res.render('updatecandidate', { candidateFound: candidateFound, communityNames: communityNamesArray });
+        })
+    });
+  } catch (e) {
+    console.log(e);
+
+  }
+
+});
+
+router.post('/updatecandidate/:id', (req, res) => {
+
+  let updatedcandidate = {
+    "patronSaint": req.body.patronSaint,
+    "surnameMiddlename": req.body.surnameMiddlename,
+    "firstname": req.body.firstname,
+    "dob": req.body.dob,
+    "email": req.body.email,
+    "phoneNumber": req.body.phoneNumber,
+    "university": req.body.university,
+    "major": req.body.major,
+    "educationStatus": req.body.educationStatus,
+    "formator": req.body.formator,
+    "spiritualDirector": req.body.spiritualDirector,
+    "candidacyType": req.body.candidacyType,
+    "candidacyDate": req.body.candidacyDate,
+    "communityDate": req.body.communityDate,
+    "permanentAddress": {
+      "houseNumber1": req.body.houseNumber1,
+      "street1": req.body.street1,
+      "ward1": req.body.ward1,
+      "district1": req.body.district1,
+      "city1": req.body.city1,
+      "region": req.body.region
+    },
+    "communityAddress": {}
+  };
+
+  const db = getDb();
+  let communities = db.collection('communities');
+  communities.find({}).toArray((err, communityRecords) => {
+    for (let i in communityRecords) {
+      let perCommunity = communityRecords[i];
+      for (let attribute in perCommunity) {
+        let selectedCommunity = String(req.body.community);
+        if (perCommunity[attribute] <= selectedCommunity && perCommunity[attribute] >= selectedCommunity) {
+          updatedcandidate.communityAddress = perCommunity;
+        }
+      }
+    }
+
+    try {
+      let candidates = db.collection('candidates');
+
+      let id = req.params.id;
+      console.log(updatedcandidate);
+
+      candidates.findOneAndUpdate({ "_id": ObjectId(id) }, { $set: updatedcandidate })
+        .then(result => {
+          console.log(result);
+
+        });
+      candidates.find({}).toArray((err, candidateRecords) => {
+        let activeArray = [];
+        let excandidateArray = [];
+        candidateRecords.forEach(candidate => {
+          if (candidate.candidacyType === 'Ex-Candidate') {
+            excandidateArray.push(candidate);
+          } else {
+            activeArray.push(candidate);
+          }
+        });
+        res.render('candidates', { activeArray: activeArray, excandidateArray: excandidateArray });
+      });
+    } catch (e) {
+      console.log(e);
+
+    }
+
   });
 });
 

@@ -51,7 +51,7 @@
           <tbody>
             <% let count = 0;
             for (let i=0; i<candidateRecords.length; i++) {
-              if (candidateRecords[i].permanentAddress[0].region == "Northern") {
+              if (candidateRecords[i].permanentAddress.region == "Northern") {
                 count++;
                 let candidate = candidateRecords[i]; %>
             <tr>
@@ -61,7 +61,7 @@
               <td><%= candidate.firstname %></td>
               <td><%= candidate.email %></td>
               <td><%= candidate.phoneNumber %></td>
-              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
               <td><%= address %></td>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
@@ -91,7 +91,7 @@
           <tbody>
             <% count = 0;
               for (let i=0; i<candidateRecords.length; i++) {
-              if (candidateRecords[i].permanentAddress[0].region == "Central") {
+              if (candidateRecords[i].permanentAddress.region == "Central") {
                 count++;
                 let candidate = candidateRecords[i]; %>
             <tr>
@@ -101,7 +101,7 @@
               <td><%= candidate.firstname %></td>
               <td><%= candidate.email %></td>
               <td><%= candidate.phoneNumber %></td>
-              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
               <td><%= address %></td>
               <td>
                 <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
@@ -131,7 +131,7 @@
           <tbody>
             <% count = 0;
             for (let i=0; i<candidateRecords.length; i++) {
-              if (candidateRecords[i].permanentAddress[0].region == "Southern") {
+              if (candidateRecords[i].permanentAddress.region == "Southern") {
                 count++;
                 let candidate = candidateRecords[i]; %>
             <tr>
@@ -141,7 +141,7 @@
               <td><%= candidate.firstname %></td>
               <td><%= candidate.email %></td>
               <td><%= candidate.phoneNumber %></td>
-              <% let address = candidate.permanentAddress[0].houseNumber1 + " " + candidate.permanentAddress[0].street1 + ", " + candidate.permanentAddress[0].ward1 + ", " + candidate.permanentAddress[0].district1 + ", " + candidate.permanentAddress[0].city1; %>
+              <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
               <td><%= address %></td>
               <td>
                 <button id=<%= candidate._id %>edit><i class="material-icons">edit</i></button>
@@ -165,14 +165,14 @@
           let _id = this.id.replace('Delete', '')
           location.reload();
           $.ajax({
-            url: '/candidates/' + _id,
+            url: '/deletecandidate/' + _id,
             type: 'DELETE',
-            success: function (result) {}
-          });         
+            success: function (result) { }
+          });
         }
       });
 
-      $('.update').click(function(e){
+      $('.update').click(function (e) {
         let _id = this.id.replace('Edit', '');
         window.location.pathname = '/updatecandidate/' + _id;
       });

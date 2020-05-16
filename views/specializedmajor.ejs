@@ -21,6 +21,9 @@
 <body class="text-center" data-gr-c-s-loaded="true">
 
   <%- include navbar.ejs %>
+
+  <h1>Specialized Major</h1>
+
   <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
     <div id="accordion">
 
@@ -85,11 +88,11 @@
                     <td><%= candidate.candidacyType %></td>
                     <td><%= candidate.candidacyDate %></td>
                     <td><%= candidate.communityDate %></td>
-                    <td><%= candidate.permanentAddress[0].region %></td>
-                    <% if(candidate.communityAddress[0] === undefined ) { %>
+                    <td><%= candidate.permanentAddress.region %></td>
+                    <% if(candidate.communityAddress === undefined ) { %>
                     <td></td>
                     <% } else { %>
-                    <td><%= candidate.communityAddress[0].communityName %></td>
+                    <td><%= candidate.communityAddress.communityName %></td>
                     <% } %>
                     <td>
                       <button class="update" id=<%= candidate._id + "Edit" %>><i
@@ -118,7 +121,7 @@
           let _id = this.id.replace('Delete', '')
           location.reload();
           $.ajax({
-            url: '/candidates/' + _id,
+            url: '/deletecandidate/' + _id,
             type: 'DELETE',
             success: function (result) { }
           });
