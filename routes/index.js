@@ -96,11 +96,18 @@ router.get('/candidatetypes', (req, res) => {
 router.get('/statistics', (req, res) => {
   const db = getDb();
   let communities = db.collection('communities');
-  communities.find({}).toArray((err, communityRecords) => {
-    // res.send('<h1> testing</h1');
-    res.render('statistics', { communityRecords: communityRecords });
+  let candidates = db.collection('candidates');
+  candidates.find({}).toArray((err, candidatesRecords => {
+    communities.find({}).toArray((err, communityRecords) => {
+      let communityNamesArray = [];
+      for (let i = 0; i < communityRecords.length; i++) {
 
-  });
+      }
+
+      res.render('statistics', { communityRecords: communityRecords });
+
+    });
+  }))
 });
 
 router.get('/searching', (req, res) => {
@@ -271,7 +278,7 @@ router.post('/updatecommunity/:id', (req, res) => {
       console.log(result);
 
     });
-  
+
   let candidates = db.collection('candidates')
   communities.find({}).toArray((err, communityRecords) => {
     candidates.find({ $and: [{ candidacyType: { $nin: ['Ex-Candidate'] } }, { communityAddress: { $nin: [{}] } }] }).toArray((err, candidateRecords) => {
@@ -352,16 +359,36 @@ router.post('/addcandidate/import', formidableMiddleware(), (req, res) => {
     .fromFile(req.files.file.path)
     .then(csvData => {
       console.log(csvData);
-
       const db = getDb();
-      let candidates = db.collection('candidates');
-      candidates.insertMany(csvData, (err, result) => {
-        if (err) {
-          console.log(err);
-          throw err;
+
+      let communities = db.collection('communities');
+      communities.find({}).toArray((err, communityRecords) => {
+        for (let i = 0; i < csvData.length; i++) {
+          let candidate = csvData[i];
+          let addressChanged = false;
+          for (let j = 0; j < communityRecords.length; j++) {
+            let community = communityRecords[j];
+
+            if (candidate.communityAddress.communityName === community.communityName) {
+              candidate.communityAddress = community;
+              addressChanged = true;
+              break;
+            } 
+          }
+          if (!addressChanged) {
+            candidate.communityAddress = {};
+          }
         }
-        console.log("Inserted: " + result.insertedCount + " rows");
-        res.send({ message: "Inserted: " + result.insertedCount + " rows" })
+        console.log(csvData);
+        let candidates = db.collection('candidates');
+        candidates.insertMany(csvData, (err, result) => {
+          if (err) {
+            console.log(err);
+            throw err;
+          }
+          console.log("Inserted: " + result.insertedCount + " rows");
+          res.send({ message: "Inserted: " + result.insertedCount + " rows" })
+        });
       });
     });
 });

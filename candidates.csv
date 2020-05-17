@@ -1,3 +1,7 @@
 patronSaint,surnameMiddlename,firstname,dob,email,phoneNumber,university,major,educationStatus,formator,spiritualDirector,candidacyType,candidacyDate,communityDate,permanentAddress.houseNumber1,permanentAddress.street1,permanentAddress.ward1,permanentAddress.district1,permanentAddress.city1,permanentAddress.region,communityAddress.communityName
-"test","test","test","2020-03-01","test@t.t","test","test","test","Graduated","test","test","Exterior","2020-03-03","2020-03-03","test","test","test","test","test","Northern","Thien Than"
+"test","test","test","2020-03-01","test@t.t","test","test","test","Freshman","test","test","Interior","2020-03-03","2020-03-03","test","test","test","test","test","Southern","Thien Than"
 "test2","test2","test2","2020-03-01","test@t.t","test2","test2","test2","Graduated","test2","test2","Exterior","2020-03-03","2020-03-03","test2","test2","test2","test2","test2","Northern","Thien Than2"
+"test3","test3","test3","2020-03-01","test@t.t","test3","test3","test3","Junior","test3","test3","Pre-Novice","2020-03-03","2020-03-03","test3","test3","test3","test3","test3","Central","Thien Than3"
+"test4","test4","test4","2020-03-01","test@t.t","test4","test4","test4","Sophomore","test4","test4","Ex-Candidate","2020-03-03","2020-03-03","test4","test4","test4","test4","test4","Southern","Thien Than"
+"test5","test5","test5","2020-03-01","test@t.t","test5","test5","test5","Senior","test5","test5","Exterior","2020-03-03","2020-03-03","test5","test5","test5","test5","test5","Northern","Thien Than2"
+"test6","test6","test6","2020-03-01","test@t.t","test6","test6","test6","Junior","test6","test6","Interior","2020-03-03","2020-03-03","test6","test6","test6","test6","test6","Central","Thien Than3"
