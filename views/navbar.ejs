@@ -94,23 +94,4 @@
     </div>
     <!-- Collapsible content -->
 
-
-    <script>
-        function search() {
-
-            $.ajax({
-                url: '/search',
-                type: 'GET',
-                data: {
-                    searchFilter: $('#searchFilter').val(),
-                    searchValue: $('#searchInput').val()
-                },
-                // success: function (result) {
-                //     window.location.pathname = '/search'
-                // }
-            });
-        }
-
-    </script>
-
 </nav>

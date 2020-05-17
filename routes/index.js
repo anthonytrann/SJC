@@ -103,7 +103,8 @@ router.get('/statistics', (req, res) => {
   });
 });
 
-router.get('/search', (req, res) => {
+router.get('/searching', (req, res) => {
+  console.log(req.body);
 
   let searchFilter = req.query.searchFilter;
   let searchValue = req.query.searchValue;
@@ -126,7 +127,7 @@ router.get('/search', (req, res) => {
             console.log(err);
           } else {
             console.log(searchRecords);
-            res.redirect('/search');
+            res.render('search', { searchRecords: searchRecords });
           }
         });
       } else if (searchFilter === 'University Name') {
@@ -135,7 +136,7 @@ router.get('/search', (req, res) => {
             console.log(err);
           } else {
             console.log(searchRecords);
-            res.redirect('/search');
+            res.render('search', { searchRecords: searchRecords });
           }
         });
       } else {
@@ -144,7 +145,7 @@ router.get('/search', (req, res) => {
             console.log(err);
           } else {
             console.log(searchRecords);
-            res.redirect('/search');
+            res.render('search', { searchRecords: searchRecords });
           }
         });
       }
@@ -155,7 +156,7 @@ router.get('/search', (req, res) => {
           console.log(err);
         } else {
           console.log(searchRecords);
-          res.redirect('/search');
+          res.render('search', { searchRecords: searchRecords });
         }
       });
     } else if (searchFilter === 'Companion Name') {
@@ -194,6 +195,91 @@ router.post('/addcommunity', (req, res) => {
   });
   res.redirect("communities");
 });
+
+router.post('/addcommunity/import', formidableMiddleware(), (req, res) => {
+  // console.log(req.files);
+
+  csvtojson()
+    .fromFile(req.files.file.path)
+    .then(csvData => {
+      console.log(csvData);
+
+      const db = getDb();
+      let communities = db.collection('communities');
+      communities.insertMany(csvData, (err, result) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        console.log("Inserted: " + result.insertedCount + " rows");
+        res.send({ message: "Inserted: " + result.insertedCount + " rows" })
+      });
+    });
+});
+
+router.delete('/deletecommunity/:id', (req, res) => {
+  let id = req.params.id;
+  const db = getDb();
+  let communities = db.collection('communities');
+
+  try {
+    communities.findOneAndDelete({ "_id": ObjectId(id) }, (err, result) => {
+      if (err) {
+        console.log("Did not delete")
+      } else {
+        console.log("Deleted community id: " + id + " successfully")
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  res.send({ message: "community deleted" });
+});
+
+router.get('/updatecommunity/:id', (req, res) => {
+  let id = req.params.id;
+  const db = getDb();
+  let communities = db.collection('communities');
+  try {
+    communities.findOne({ "_id": ObjectId(id) })
+      .then(communityFound => {
+        console.log(communityFound);
+
+        res.render('updatecommunity', { communityFound: communityFound })
+      });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.post('/updatecommunity/:id', (req, res) => {
+  let id = req.params.id;
+  let updatedCommunity = {
+    "communityName": req.body.communityName,
+    "communitySaint": req.body.communitySaint,
+    "communityPhone": req.body.communityPhone,
+    "houseNumber2": req.body.houseNumber2,
+    "street2": req.body.street2,
+    "ward2": req.body.ward2,
+    "district2": req.body.district2,
+    "city2": req.body.city2
+  };
+  const db = getDb();
+  let communities = db.collection('communities');
+  communities.findOneAndUpdate({ "_id": ObjectId(id) }, { $set: updatedCommunity })
+    .then(result => {
+      console.log(result);
+
+    });
+  
+  let candidates = db.collection('candidates')
+  communities.find({}).toArray((err, communityRecords) => {
+    candidates.find({ $and: [{ candidacyType: { $nin: ['Ex-Candidate'] } }, { communityAddress: { $nin: [{}] } }] }).toArray((err, candidateRecords) => {
+      res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords });
+    });
+  });
+});
+
 
 router.get('/addcandidate', (req, res) => {
   const db = getDb();
@@ -295,9 +381,7 @@ router.delete('/deletecandidate/:id', (req, res) => {
     });
   } catch (e) {
     console.log(e);
-
   }
-
 });
 
 router.get('/updatecandidate/:id', (req, res) => {
@@ -314,6 +398,8 @@ router.get('/updatecandidate/:id', (req, res) => {
       }
       candidates.findOne({ "_id": ObjectId(id) })
         .then(candidateFound => {
+          console.log(candidateFound);
+
           res.render('updatecandidate', { candidateFound: candidateFound, communityNames: communityNamesArray });
         })
     });

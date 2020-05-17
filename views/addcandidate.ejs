@@ -213,7 +213,7 @@
   </div>
 
   <script>
-      function importFile(e){
+      function importFile(){
         var formData = new FormData();
         formData.append('file', document.querySelector('#file').files[0]);
 
@@ -231,8 +231,7 @@
             console.log("err: " + err);        
           }
         });
-      }
-      
+      }     
   </script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"

@@ -17,13 +17,7 @@
 
   <div class="jumbotron">
 
-    <h1>Add Community</h1>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-      Import Candidates
-    </button>
-    
+    <h1>Update Community</h1>
 
     <form method="post">
 
@@ -32,42 +26,43 @@
         <div class="form-group" id="inputCommunityAddress">
           <div class="form-row">
             <div class="form-group col-md-4">
+              <% console.log(communityFound.communityName) %>
               <label for="inputCommunityName">Community Name</label>
-              <input type="text" class="form-control" id="inputCommunityName" name="communityName" required>
+              <input type="text" class="form-control" id="inputCommunityName" name="communityName" value=<%- + communityFound.communityName %> required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputCommunitySaint">Patron Saint</label>
-              <input type="text" class="form-control" id="inputCommunitySaint" name="communitySaint" required>
+              <input type="text" class="form-control" id="inputCommunitySaint" name="communitySaint" value=<%- communityFound.communitySaint %> required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputCommunityPhone">Phone Number</label>
-              <input type="text" class="form-control" id="inputCommunityPhone" name="communityPhone" required>
+              <input type="text" class="form-control" id="inputCommunityPhone" name="communityPhone" value=<%- communityFound.communityPhone %> required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-2">
               <label for="inputHouseNumber2">No.</label>
               <input type="text" class="form-control" id="inputHouseNumber2" placeholder="House Number"
-                name="houseNumber2" required>
+                name="houseNumber2" value=<%= communityFound.houseNumber2 %> required>
             </div>
             <div class="form-group col-md-10">
               <label for="inputStreet2">Street</label>
               <input type="text" class="form-control" id="inputStreet2" placeholder="Street Name" name="street2"
-                required>
+              value=<%-  + communityFound.street2 %> required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="inputWard2">Ward</label>
-              <input type="text" class="form-control" id="inputWard2" name="ward2" required>
+              <input type="text" class="form-control" id="inputWard2" name="ward2" value=<%= communityFound.ward2 %> required>
             </div>
             <div class="form-group col-md-6">
               <label for="inputDistrict2">District</label>
-              <input type="text" class="form-control" id="inputDistrict2" name="district2" required>
+              <input type="text" class="form-control" id="inputDistrict2" name="district2" value=<%= communityFound.district2 %> required>
             </div>
             <div class="form-group col-md-6">
               <label for="inputCity2">City</label>
-              <input type="text" class="form-control" id="inputCity2" name="city2" required>
+              <input type="text" class="form-control" id="inputCity2" name="city2" value=<%= communityFound.city2 %> required>
             </div>
           </div>
         </div>
@@ -76,32 +71,6 @@
       <button type="submit" class="btn btn-primary">Add</button>
       </div>
     </form>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Import Communities via CSV</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="fileForm">
-            <div class="form-group">
-              <label for="file">
-                <h4>Import Communities from CSV</h4>
-              </label>
-              <input type="file" class="form-control-file" id="file">
-            </div>
-            <button type="button" onclick="importFile()" id="importAddButton" class="btn btn-primary">Add</button>
-          </form>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
