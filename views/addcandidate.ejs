@@ -108,8 +108,8 @@
         <div class="form-group col-md-4">
           <label for="inputType">Candidacy Type</label>
           <select id="inputType" class="form-control" name="candidacyType" required>
-            <option selected>Exterior</option>
-            <option>Interior</option>
+            <option selected>Interior</option>
+            <option>Exterior</option>
             <option>Pre-Novice</option>
             <option>Ex-Candidate</option>
           </select>
@@ -181,7 +181,7 @@
       <button type="submit" class="btn btn-primary">Add</button>
     </form>
 
-    
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -213,25 +213,25 @@
   </div>
 
   <script>
-      function importFile(){
-        var formData = new FormData();
-        formData.append('file', document.querySelector('#file').files[0]);
+    function importFile() {
+      var formData = new FormData();
+      formData.append('file', document.querySelector('#file').files[0]);
 
-        $.ajax({
-          url: '/addcandidate/import',
-          type: 'POST',
-          data: formData,
-          processData: false,  // tell jQuery not to process the data
-          contentType: false,  // tell jQuery not to set contentType
-          success: function (data) {
-            window.location.pathname='/candidates'
-            console.log(data.message);
-          },
-          error: function(err) {
-            console.log("err: " + err);        
-          }
-        });
-      }     
+      $.ajax({
+        url: '/addcandidate/import',
+        type: 'POST',
+        data: formData,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        success: function (data) {
+          window.location.pathname = '/candidates'
+          console.log(data.message);
+        },
+        error: function (err) {
+          console.log("err: " + err);
+        }
+      });
+    }     
   </script>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"

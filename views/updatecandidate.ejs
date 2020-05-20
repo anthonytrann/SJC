@@ -139,25 +139,25 @@
           <select id="inputType" class="form-control" name="candidacyType" required>
             <% let typeSelected = candidateFound.candidacyType 
             if(typeSelected === 'Exterior') { %>
-            <option selected>Exterior</option>
-            <option>Interior</option>
+            <option selected>Interior</option>
+            <option>Exterior</option>
             <option>Pre-Novice</option>
             <option>Ex-Candidate</option>
             <% } else if (typeSelected === 'Interior') { %>
-            <option>Exterior</option>
-            <option selected>Interior</option>
+            <option>Interior</option>
+            <option selected>Exterior</option>
             <option>Pre-Novice</option>
             <option>Ex-Candidate</option>
             <% } else if (typeSelected === 'Pre-Novice') { %>
-            <option>Exterior</option>
             <option>Interior</option>
+            <option>Exterior</option>
             <option selected>Pre-Novice</option>
             <option>Ex-Candidate</option>
             <% } else if (typeSelected === 'Ex-Candidate') { %>
-            <option selected>Exterior</option>
             <option>Interior</option>
+            <option>Exterior</option>
             <option>Pre-Novice</option>
-            <option>Ex-Candidate</option>
+            <option selected>Ex-Candidate</option>
             <% } %>
           </select>
         </div>

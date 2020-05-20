@@ -97,17 +97,82 @@ router.get('/statistics', (req, res) => {
   const db = getDb();
   let communities = db.collection('communities');
   let candidates = db.collection('candidates');
-  candidates.find({}).toArray((err, candidatesRecords => {
-    communities.find({}).toArray((err, communityRecords) => {
+  candidates.find({}).toArray((err, candidatesRecords) => {
+    if(err) console.log(err);
+    
+    communities.find({}).toArray((err2, communityRecords) => {
+      if(err2) console.log(err2);
+      
       let communityNamesArray = [];
+      let canComQuantityArray = [];
+      let typeQuantityArray = [0, 0, 0, 0];
+      let regionQuantityArray= [0,0,0];
+      let uniNamesArray = [];
+      let uniQuantityArray = [];
+
       for (let i = 0; i < communityRecords.length; i++) {
+        communityNamesArray.push(communityRecords[i].communityName);
+        canComQuantityArray.push(0);
+      }
+      let uniCount =0;
+      for (let i = 0; i < candidatesRecords.length; i++) {
+
+        for (let j = 0; j < communityNamesArray.length; j++) {
+          if (candidatesRecords[i].communityAddress.communityName === communityNamesArray[j]) {
+            canComQuantityArray[j] = canComQuantityArray[j] + 1;
+          }
+        }
+
+        if (candidatesRecords[i].candidacyType === 'Interior') {
+          typeQuantityArray[0] = typeQuantityArray[0] + 1;
+        } else if (candidatesRecords[i].candidacyType === 'Exterior') {
+          typeQuantityArray[1] = typeQuantityArray[1] + 1;
+        } else if (candidatesRecords[i].candidacyType === 'Pre-Novice') {
+          typeQuantityArray[2] = typeQuantityArray[2] + 1;
+        } else if (candidatesRecords[i].candidacyType === 'Ex-Candidate') {
+          typeQuantityArray[3] = typeQuantityArray[3] + 1;
+        }
+
+        if(candidatesRecords[i].permanentAddress.region === 'Northern') {
+          regionQuantityArray[0] = regionQuantityArray[0] + 1;
+        }else if(candidatesRecords[i].permanentAddress.region === 'Central') {
+          regionQuantityArray[1] = regionQuantityArray[1] + 1;
+        }else if(candidatesRecords[i].permanentAddress.region === 'Southern') {
+          regionQuantityArray[2] = regionQuantityArray[2] + 1;
+        }
+
+        
+        if(uniNamesArray.includes(candidatesRecords[i].univeristy)){
+          let index = uniNamesArray.indexOf(candidatesRecords[i].university);
+          uniQuantityArray[index] = uniQuantityArray + 1;
+        } else {
+          uniNamesArray.push(candidatesRecords[i].university);
+          uniQuantityArray.push(1);
+        }
 
       }
 
-      res.render('statistics', { communityRecords: communityRecords });
+      res.render('statistics', {
+        data1: {
+          labels: communityNamesArray,
+          series: canComQuantityArray
+        },
+        data2: {
+          labels: ['Interior', 'Exterior', 'Pre-Novice', 'Ex-Candidate'],
+          series: typeQuantityArray
+        },
+        data3: {
+          labels: ['Northern', 'Central', 'Southern'],
+          series: regionQuantityArray
+        },
+        data4: {
+          labels: uniNamesArray,
+          series: uniQuantityArray
+        }
+      });
 
     });
-  }))
+  });
 });
 
 router.get('/searching', (req, res) => {
@@ -373,7 +438,7 @@ router.post('/addcandidate/import', formidableMiddleware(), (req, res) => {
               candidate.communityAddress = community;
               addressChanged = true;
               break;
-            } 
+            }
           }
           if (!addressChanged) {
             candidate.communityAddress = {};

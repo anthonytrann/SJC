@@ -6,9 +6,14 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+  <link rel="stylesheet" type="text/css" href="stylesheets/statistics.css" media="all" />
+
   <link rel="shortcut icon" href=http://www.freshdesignweb.com/wp-content/themes/fv24/images/icon.ico />
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartist-plugin-axistitle@0.0.7/dist/chartist-plugin-axistitle.min.js"></script>
 </head>
 
 <body data-gr-c-s-loaded="true">
@@ -21,43 +26,354 @@
 
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" id="bar-tab" data-toggle="tab" href="#bar" role="tab" aria-controls="bar" aria-selected="false">Bar Chart</a>
+      <a class="nav-link active" id="bar-tab" data-toggle="tab" href="#bar" role="tab" aria-controls="bar"
+        aria-selected="false">Bar Chart</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" id="pie-tab" data-toggle="tab" href="#pie" role="tab" aria-controls="pie" aria-selected="true">Pie Chart</a>
+      <a class="nav-link" id="pie-tab" data-toggle="tab" href="#pie" role="tab" aria-controls="pie"
+        aria-selected="true">Pie Chart</a>
     </li>
-    
+
   </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="bar" role="tabpanel" aria-labelledby="bar-tab">...</div>
-    <div class="tab-pane fade" id="pie" role="tabpanel" aria-labelledby="pie-tab">...</div>
+  <div class="text-center tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="bar" role="tabpanel" aria-labelledby="bar-tab">
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-minor-seventh" id="barchart1">
+                <% let dataOne = data1 %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="barchart2">
+                <% let dataTwo = data2 %>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="barchart3">
+                <% let dataThree = data3 %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="barchart4">
+                <% let dataFour = data4 %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pie" role="tabpanel" aria-labelledby="pie-tab">
+      
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-minor-seventh" id="piechart1"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="piechart2"></div> 
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="piechart3"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <div class="ct-chart .ct-perfect-fourth" id="piechart4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="ct-chart .ct-perfect-fourth" id="chart1"></div>
-  <div class="ct-chart .ct-perfect-fourth" id="chart2"></div>
-  <%  %>
-
-
   <script>
-    let data = <% - JSON.stringify(comRec) %>
-      console.log(data);
+    var data1 = <%- JSON.stringify(dataOne) %>;
+    var data2 = <%- JSON.stringify(dataTwo) %>;
+    var data3 = <%- JSON.stringify(dataThree) %>;
+    var data4 = <%- JSON.stringify(dataFour) %>;
 
-    var data1 = {
-      labels: ['Bananas', 'Apples', 'Grapes'],
-      series: [20, 15, 40]
-    }; var data2 = {
-      labels: ['Bananas', 'Apples', 'Grapes'],
-      series: [[20, 15, 40]]
-    };
-
-    let comRecords = comRec
-
-    var options = {
+    var options1 = {
       width: 450,
       height: 200,
-      // labelInterpolationFnc: function (value) {
-      //   return value[0].
-      // }
+      distributeSeries: true,
+      // style:{
+      //   width: 450,
+      //   height: 300
+      // },
+      axisY: {
+        onlyInteger: true
+      },
+      plugins: [
+        Chartist.plugins.ctAxisTitle({
+          axisX: {
+            axisTitle: 'Community Name',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 35
+            },
+            textAnchor: 'middle'
+          },
+          axisY: {
+            axisTitle: 'Number of Candidates',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 0
+            },
+            textAnchor: 'middle',
+            flipTitle: false
+          }
+        })
+      ]
+    };
+
+    var options2 = {
+      width: 450,
+      height: 200,
+      distributeSeries: true,
+      axisY: {
+        onlyInteger: true
+      },
+      plugins: [
+        Chartist.plugins.ctAxisTitle({
+          axisX: {
+            axisTitle: 'Candidacy Type',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 35
+            },
+            textAnchor: 'middle'
+          },
+          axisY: {
+            axisTitle: 'Number of Candidates',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 0
+            },
+            textAnchor: 'middle',
+            flipTitle: false
+          }
+        })
+      ]
+    };
+
+    var options3 = {
+      width: 450,
+      height: 200,
+      distributeSeries: true,
+      axisY: {
+        onlyInteger: true
+      },
+      plugins: [
+        Chartist.plugins.ctAxisTitle({
+          axisX: {
+            axisTitle: 'Regional Permanent Address',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 35
+            },
+            textAnchor: 'middle'
+          },
+          axisY: {
+            axisTitle: 'Number of Candidates',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 0
+            },
+            textAnchor: 'middle',
+            flipTitle: false
+          }
+        })
+      ]
+    };
+
+    var options4 = {
+      width: 450,
+      height: 200,
+      distributeSeries: true,
+      axisY: {
+        onlyInteger: true
+      },
+      plugins: [
+        Chartist.plugins.ctAxisTitle({
+          axisX: {
+            axisTitle: 'University Name',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 35
+            },
+            textAnchor: 'middle'
+          },
+          axisY: {
+            axisTitle: 'Number of Candidates',
+            axisClass: 'ct-axis-title',
+            offset: {
+              x: 0,
+              y: 0
+            },
+            textAnchor: 'middle',
+            flipTitle: false
+          }
+        })
+      ]
+    };
+
+    // var responsiveOptions = [
+    //   ['screen and (min-width: 640px)', {
+    //     chartPadding: 30,
+    //     labelOffset: 100,
+    //     labelDirection: 'explode',
+    //     labelInterpolationFnc: function (value) {
+    //       return value;
+    //     }
+    //   }],
+    //   ['screen and (min-width: 1024px)', {
+    //     labelOffset: 80,
+    //     chartPadding: 20
+    //   }]
+    // ];
+
+
+
+    // new Chartist.Pie('#chart1', data1, options, responsiveOptions);
+    new Chartist.Bar('#barchart1', data1, options1)
+    new Chartist.Bar('#barchart2', data2, options2);
+    new Chartist.Bar('#barchart3', data3, options3);
+    new Chartist.Bar('#barchart4', data4, options4);
+  //</script>
+
+  <script>
+    var data1 = <%- JSON.stringify(dataOne) %>;
+    var data2 = <%- JSON.stringify(dataTwo) %>;
+    var data3 = <%- JSON.stringify(dataThree) %>;
+    var data4 = <%- JSON.stringify(dataFour) %>;
+
+    var options1 = {
+      width: 450,
+      height: 200,
+      labelInterpolationFnc: function (value) {
+        return value[0]
+      }
+      // plugins: [
+      //   Chartist.plugins.ctAxisTitle({
+      //     axisY: {
+      //       axisTitle: 'Number of Candidates per Community',
+      //       axisClass: 'ct-axis-title',
+      //       offset: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       textAnchor: 'middle',
+      //       flipTitle: false
+      //     }
+      //   })
+      // ]
+    };
+
+    var options2 = {
+      width: 450,
+      height: 200,
+      labelInterpolationFnc: function (value) {
+        return value[0]
+      }
+      // plugins: [
+      //   Chartist.plugins.ctAxisTitle({
+      //     axisY: {
+      //       axisTitle: 'Number of Candidates per Candidacy Type',
+      //       axisClass: 'ct-axis-title',
+      //       offset: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       textAnchor: 'middle',
+      //       flipTitle: false
+      //     }
+      //   })
+      // ]
+    };
+
+    var options3 = {
+      width: 450,
+      height: 200,
+      labelInterpolationFnc: function (value) {
+        return value[0]
+      }
+      // plugins: [
+      //   Chartist.plugins.ctAxisTitle({
+      //     axisY: {
+      //       axisTitle: 'Number of Candidates per Regional Address',
+      //       axisClass: 'ct-axis-title',
+      //       offset: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       textAnchor: 'middle',
+      //       flipTitle: false
+      //     }
+      //   })
+      // ]
+    };
+
+    var options4 = {
+      width: 450,
+      height: 200,
+      labelInterpolationFnc: function (value) {
+        return value[0]
+      }
+      // plugins: [
+      //   Chartist.plugins.ctAxisTitle({
+      //     axisY: {
+      //       axisTitle: 'Number of Candidates per University',
+      //       axisClass: 'ct-axis-title',
+      //       offset: {
+      //         x: 0,
+      //         y: 0
+      //       },
+      //       textAnchor: 'middle',
+      //       flipTitle: false
+      //     }
+      //   })
+      // ]
     };
 
     var responsiveOptions = [
@@ -70,14 +386,18 @@
         }
       }],
       ['screen and (min-width: 1024px)', {
-        labelOffset: 80,
+        labelOffset: 30,
         chartPadding: 20
       }]
     ];
 
-    new Chartist.Pie('#chart1', data1, options, responsiveOptions);
-    new Chartist.Line('#chart2', data2, options);
-  </script>
+
+    // new Chartist.Pie('#chart1', data1, options, responsiveOptions);
+    new Chartist.Pie('#piechart1', data1, options1, responsiveOptions)
+    new Chartist.Pie('#piechart2', data2, options2, responsiveOptions);
+    new Chartist.Pie('#piechart3', data3, options3, responsiveOptions);
+    new Chartist.Pie('#piechart4', data4, options4, responsiveOptions);
+//</script>
 
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
