@@ -5,14 +5,51 @@ var ObjectId = require('mongodb').ObjectID;
 var csvtojson = require('csvtojson');
 const formidableMiddleware = require('express-formidable');
 
+var sess; // should not be global, will need to change this
+
 /* GET login page. */
-router.get('/login', function (req, res, next) {
+router.get('/login', function (req, res) {
   res.render('login');
 });
 
+router.post('/login', (req, res) => {
+  sess = req.session;
+  sess.email = req.body.email;
+  // console.log('post login');
+  
+  res.end('done');
+});
+
 // GET home page
-router.get('/', function (req, res) {
-  res.render('homepage');
+router.get('/', (req, res) => {
+  sess = req.session;
+  if (sess.email) {
+    return res.redirect('homepage')
+  }
+  res.render('login')
+});
+
+router.get('/homepage', (req, res) => {
+  sess= req.session;
+  if (sess.email) {
+    res.render('homepage');
+    // res.write(`<h1>Hello ${sess.email} </h1><br>`);
+    // res.end('<a href=' + '/logout' + '>Logout</a>');
+  }
+  else {
+    res.write('<h1>Please login first.</h1>');
+    res.end('<a href=' + '/' + '>Login</a>');
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.redirect('/');
+  });
+
 });
 
 router.get('/communities', (req, res) => {
@@ -98,15 +135,15 @@ router.get('/statistics', (req, res) => {
   let communities = db.collection('communities');
   let candidates = db.collection('candidates');
   candidates.find({}).toArray((err, candidatesRecords) => {
-    if(err) console.log(err);
-    
+    if (err) console.log(err);
+
     communities.find({}).toArray((err2, communityRecords) => {
-      if(err2) console.log(err2);
-      
+      if (err2) console.log(err2);
+
       let communityNamesArray = [];
       let canComQuantityArray = [];
       let typeQuantityArray = [0, 0, 0, 0];
-      let regionQuantityArray= [0,0,0];
+      let regionQuantityArray = [0, 0, 0];
       let uniNamesArray = [];
       let uniQuantityArray = [];
 
@@ -114,7 +151,7 @@ router.get('/statistics', (req, res) => {
         communityNamesArray.push(communityRecords[i].communityName);
         canComQuantityArray.push(0);
       }
-      let uniCount =0;
+      let uniCount = 0;
       for (let i = 0; i < candidatesRecords.length; i++) {
 
         for (let j = 0; j < communityNamesArray.length; j++) {
@@ -133,16 +170,16 @@ router.get('/statistics', (req, res) => {
           typeQuantityArray[3] = typeQuantityArray[3] + 1;
         }
 
-        if(candidatesRecords[i].permanentAddress.region === 'Northern') {
+        if (candidatesRecords[i].permanentAddress.region === 'Northern') {
           regionQuantityArray[0] = regionQuantityArray[0] + 1;
-        }else if(candidatesRecords[i].permanentAddress.region === 'Central') {
+        } else if (candidatesRecords[i].permanentAddress.region === 'Central') {
           regionQuantityArray[1] = regionQuantityArray[1] + 1;
-        }else if(candidatesRecords[i].permanentAddress.region === 'Southern') {
+        } else if (candidatesRecords[i].permanentAddress.region === 'Southern') {
           regionQuantityArray[2] = regionQuantityArray[2] + 1;
         }
 
-        
-        if(uniNamesArray.includes(candidatesRecords[i].univeristy)){
+
+        if (uniNamesArray.includes(candidatesRecords[i].univeristy)) {
           let index = uniNamesArray.indexOf(candidatesRecords[i].university);
           uniQuantityArray[index] = uniQuantityArray + 1;
         } else {

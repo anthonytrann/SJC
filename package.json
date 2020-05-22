@@ -6,7 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "connect-redis": "^4.0.4",
     "cookie-parser": "~1.4.4",
     "csvtojson": "^2.0.10",
     "debug": "~2.6.9",
@@ -19,6 +21,7 @@
     "mongodb": "^3.1.13",
     "monk": "^7.1.2",
     "morgan": "~1.9.1",
+    "redis": "^3.0.2",
     "uuid": "^3.4.0"
   }
 }

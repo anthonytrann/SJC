@@ -4,12 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var bodyParser = require('body-parser');
 var uuid = require('uuid');
-
-var indexRouter = require('./routes/index');
-
+const indexRouter = require('./routes/index');
 var app = express();
-
 const initDb = require("./routes/database").initDb;
 
 const port = 3001;
@@ -24,8 +22,21 @@ initDb(function (err) {
   });
 });
 
+app.use(session({
+  secret: 'ssshhhhh',
+  cookie: {
+    maxAge: 600000
+  },
+  saveUninitialized: true,
+  resave: true
+}));
 
-// session set up
+app.use(bodyParser.json());      
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/views'));
+
+
+// // session set up
 // app.use(session({
 //   // genid: function (req) {
 //   //   return uuid() // use UUIDs for session IDs
@@ -57,10 +68,10 @@ app.use('/', indexRouter);
 
 // handler for login request
 // at the moment it does nothing
-app.post('/login', (req, res) => {
-  console.log(req.session);
-  res.send();
-});
+// app.post('/login', (req, res) => {
+//   console.log(req.session);
+//   res.send();
+// });
 
 
 // catch 404 and forward to error handler

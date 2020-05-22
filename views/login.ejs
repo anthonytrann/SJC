@@ -8,6 +8,9 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" type="text/css" href="stylesheets/login.css">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 </head>
 
 <body class="text-center" data-gr-c-s-loaded="true">
@@ -35,24 +38,37 @@
       </div>
 
       <!-- Remember Me Checkbox -->
-      <div class="checkbox mb-3">
+      <!-- <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
-      </div>
+      </div> -->
 
       <!-- Submit Button -->
-      <button class="btn btn-lg btn-primary btn-block mx-sm-auto" type="submit">Sign in</button>
+      <button id="submit" class="btn btn-lg btn-primary btn-block mx-sm-auto" type="submit">Sign in</button>
 
       <!-- Copyright? need much? -->
       <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
     </form>
   </div>
 
+  <script>
+    $(document).ready(function () {
+      var email, pass;
+      $("#submit").click(function () {
+        email = $("#inputEmail").val();
+        pass = $("#inputPassword").val();
+        $.post("/login", { email: email, pass: pass }, function (data) {
+          if (data === 'done') {
+            window.location.href = "/homepage";
+          }
+        });
+      });
+    });
+  </script>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>
@@ -60,7 +76,7 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
 
-  <script>
+  <!-- <script>
     // make login request when user submits form
     $('#login').submit(function (e) {
       e.preventDefault();
@@ -76,7 +92,7 @@
         }
       });
     });
-  </script>
+  </script> -->
 </body>
 
 </html>
