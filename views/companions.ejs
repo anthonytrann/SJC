@@ -24,7 +24,147 @@
 
   <h1>Companions</h1>
 
-
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="formator-tab" data-toggle="tab" href="#formator" role="tab"
+        aria-controls="formator" aria-selected="true">Formators</a>
+      <a class="nav-item nav-link" id="spiritualdirector-tab" data-toggle="tab" href="#spiritualdirector" role="tab"
+        aria-controls="spiritualdirector" aria-selected="false">Spiritual Directors</a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="formator" role="tabpanel" aria-labelledby="formator-tab">
+      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+        <div id="accordion">
+          <% for (let i = 0; i < formatorArray.length; i++) { 
+            let companionName = formatorArray[i].name.replace(/\s/g, '');
+            let companionHeading = companionName + "Heading";
+            let companionCollapse = companionName + "Collapse";
+            let hashCompanionCollapse = "#" + companionCollapse %>
+            <div class="card">
+              <div class="card-header" id=<%= companionHeading %>>
+                <h5 class="mb-0">
+                  <button class="btn" type="button" data-toggle="collapse" data-target=<%= hashCompanionCollapse %> aria-expanded="false" aria-controls=<%= companionCollapse %>>
+                    Name: <%= formatorArray[i].name %> | Number of candidates: <%= formatorArray.length %>
+                  </button>
+                </h5>
+              </div>
+              <div id=<%= companionCollapse %> class="collapse" aria-labelledby=<%= companionHeading %> data-parent="#accordion">
+                <div class="card-body">
+                  <div class="container col-md-12 .offset-md-3" style="overflow-x:auto;">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Surname + Middlename</th>
+                          <th scope="col">Firstname</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Phone Number</th>
+                          <th scope="col">Permanent Address</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% let count = 0;
+                        for (let j=0; j<communityCandidateList.length; j++) {
+                          let communityList = communityCandidateList[j].list;
+                          for (let k=0; k<communityList.length; k++) {
+                            if (communityList[k].formator === formatorArray[i].name ) {
+                              count = count + 1;
+                              let candidate = communityList[k]; %>
+                              <tr>
+                                <th scope="row"><%= count %></th>
+                                <td><%= candidate.surnameMiddlename %></td>
+                                <td><%= candidate.firstname %></td>
+                                <td><%= candidate.email %></td>
+                                <td><%= candidate.phoneNumber %></td>
+                                <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
+                                <td><%= address %></td>
+                                <td>
+                                  <button class="update" id=<%= candidate._id + "Edit" %>><i
+                                      class="material-icons">edit</i></button>
+                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i
+                                      class="material-icons">delete</i></button>
+                                </td>
+                              </tr>
+                            <% }
+                          }
+                        } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="spiritualdirector" role="tabpanel" aria-labelledby="spiritualdirector-tab">
+      <div class="container col-md-10 .offset-md-3" style="overflow-x:auto;">
+        <div id="accordion">
+          <% for (let i = 0; i < spiritualDirectorArray.length; i++) { 
+            let companionName = spiritualDirectorArray[i].name.replace(/\s/g, '');
+            let companionHeading = companionName + "Heading";
+            let companionCollapse = companionName + "Collapse";
+            let hashCompanionCollapse = "#" + companionCollapse %>
+            <div class="card">
+              <div class="card-header" id=<%= companionHeading %>>
+                <h5 class="mb-0">
+                  <button class="btn" type="button" data-toggle="collapse" data-target=<%= hashCompanionCollapse %> aria-expanded="false" aria-controls=<%= companionCollapse %>>
+                    Name: <%= spiritualDirectorArray[i].name %> | Number of candidates: <%= spiritualDirectorArray.length %>
+                  </button>
+                </h5>
+              </div>
+              <div id=<%= companionCollapse %> class="collapse" aria-labelledby=<%= companionHeading %> data-parent="#accordion">
+                <div class="card-body">
+                  <div class="container col-md-12 .offset-md-3" style="overflow-x:auto;">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Surname + Middlename</th>
+                          <th scope="col">Firstname</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Phone Number</th>
+                          <th scope="col">Permanent Address</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% let count = 0;
+                        for (let j=0; j<communityCandidateList.length; j++) {
+                          let communityList = communityCandidateList[j].list;
+                          for (let k=0; k<communityList.length; k++) {
+                            if (communityList[k].spiritualDirector === spiritualDirectorArray[i].name ) {
+                              count = count + 1;
+                              let candidate = communityList[k]; %>
+                              <tr>
+                                <th scope="row"><%= count %></th>
+                                <td><%= candidate.surnameMiddlename %></td>
+                                <td><%= candidate.firstname %></td>
+                                <td><%= candidate.email %></td>
+                                <td><%= candidate.phoneNumber %></td>
+                                <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
+                                <td><%= address %></td>
+                                <td>
+                                  <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i
+                                      class="material-icons">delete</i></button>
+                                </td>
+                              </tr>
+                            <% }
+                          }
+                        } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

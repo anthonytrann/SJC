@@ -123,13 +123,31 @@
       <div class="row justify-content-around">
         <div class="form-group col-md-4">
           <label for="inputFormator">Formator</label>
-          <input type="text" class="form-control" id="inputFormator" placeholder="Formator" name="formator"
-            value=<%= candidateFound.formator %>>
+          <select class="form-control" id="inputFormator" name="formator">
+            <% let selectedFormator = candidateFound.formator; %>
+              <option>Select a Formator</option>
+              <% for (let i = 0; i < formatorArray.length; i++) {
+                if( selectedFormator === formatorArray[i].name ) { %>
+                  <option selected><%= formatorArray[i].name %></option>
+                <% } else { %>
+                  <option><%= formatorArray[i].name %></option>
+                <% }
+              } %>
+          </select>
         </div>
         <div class="form-group col-md-4">
           <label for="inputSpiritualDirector">Spiritual Director</label>
-          <input type="text" class="form-control" id="inputSpiritualDirector" placeholder="Spiritual Director"
-            name="spiritualDirector" value=<%= candidateFound.spiritualDirector %>>
+          <select class="form-control" id="inputSpiritualDirector" name="spiritualDirector">
+            <% let selectedSpiritualDirector = candidateFound.spiritualDirector; %>
+              <option>Select a Spiritual Director</option>
+              <% for (let i = 0; i < spiritualDirectorArray.length; i++) {
+                if( selectedSpiritualDirector === spiritualDirectorArray[i].name ) { %>
+                  <option selected><%= spiritualDirectorArray[i].name %></option>
+                <% } else { %>
+                  <option><%= spiritualDirectorArray[i].name %></option>
+                <% }
+              } %>
+          </select>
         </div>
       </div>
 
@@ -235,7 +253,7 @@
               <% try { 
                 let selectedCommunity = candidateFound.communityAddress.communityName; %>
               <option>Select a Community</option>
-              <% for (var i=0; i<communityNames.length; i++) {
+              <% for (let i=0; i<communityNames.length; i++) {
                   if( selectedCommunity === communityNames[i] ) { %>
               <option selected><%= communityNames[i] %></option>
               <% } else { %>
@@ -244,7 +262,7 @@
                 } 
               } catch(e) { %>
               <option selected>Select a Community</option>
-              <% for (var i=0; i<communityNames.length; i++) { %>
+              <% for (let i=0; i<communityNames.length; i++) { %>
               <option><%= communityNames[i] %></option>
               <% }
               } %>

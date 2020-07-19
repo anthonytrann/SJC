@@ -26,18 +26,16 @@
 
   <div class="container col-md-11 .offset-md-3" style="overflow-x:auto;">
     <div id="accordion">
-
       <% for (let i = 0; i < candidateArray.length; i++) { 
         let university = candidateArray[i];
-        let uniHeading = university.uniName + "Heading";
-        let uniCollapse = university.uniName + "Collapse";
-        let uniCollapseHash = "#" + uniCollapse; 
+        let uniHeading = university.uniName.replace(/\s/g, '') + "Heading";
+        let uniCollapse = university.uniName.replace(/\s/g, '') + "Collapse";
+        let hashUniCollapse = "#" + uniCollapse; 
         let candidatesArray = university.candidates %>
       <div class="card">
         <div class="card-header" id=<%= uniHeading %>>
           <h5 class="mb-0">
-            <button class="btn" data-toggle="collapse" data-target=<%= uniCollapseHash %> aria-expanded="false"
-              aria-controls=<%= uniCollapse %>>
+            <button class="btn" type="button" data-toggle="collapse" data-target=<%= hashUniCollapse %> aria-expanded="false" aria-controls=<%= uniCollapse %>>
               University: <%= university.uniName %> | Number of candidates: <%= university.count %>
             </button>
           </h5>

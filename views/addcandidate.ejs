@@ -95,12 +95,21 @@
       <div class="row justify-content-around">
         <div class="form-group col-md-4">
           <label for="inputFormator">Formator</label>
-          <input type="text" class="form-control" id="inputFormator" placeholder="Formator" name="formator">
+          <select class="form-control" id="inputFormator" name="formator">
+            <option selected>Select a Formator</option>
+            <% for(let i = 0; i < formatorArray.length; i++) { %>
+              <option><%= formatorArray[i].name %></option>
+            <% } %>
+          </select>
         </div>
         <div class="form-group col-md-4">
           <label for="inputSpiritualDirector">Spiritual Director</label>
-          <input type="text" class="form-control" id="inputSpiritualDirector" placeholder="Spiritual Director"
-            name="spiritualDirector">
+          <select class="form-control" id="inputSpiritualDirector" name="spiritualDirector">
+            <option selected>Select a Spiritual Director</option>
+            <% for(let i = 0; i < spiritualDirectorArray.length; i++) { %>
+              <option><%= spiritualDirectorArray[i].name %></option>
+            <% } %>
+          </select>
         </div>
       </div>
 
@@ -150,7 +159,7 @@
                 <input type="text" class="form-control" id="inputDistrict1" name="district1" required>
               </div>
               <div class="form-group col-md-6">
-                <label for="inputCity1">City</label>
+                <label for="inputCity1">City/Province</label>
                 <input type="text" class="form-control" id="inputCity1" name="city1" required>
               </div>
               <div class="form-group col-md-6">

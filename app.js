@@ -36,17 +36,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/views'));
 
 
-// // session set up
-// app.use(session({
-//   // genid: function (req) {
-//   //   return uuid() // use UUIDs for session IDs
-//   // },
-//   secret: 'some-secret',
-//   cookie: {
-//     maxAge: 60000
-//   }
-// }));
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
