@@ -120,8 +120,8 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
-              <td><%= candidate.spiritualDirector %></td>
+              <td><%= candidate.companions.formator.name %></td>
+              <td><%= candidate.companions.spiritualDirector.name %></td>
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
@@ -211,8 +211,8 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
-              <td><%= candidate.spiritualDirector %></td>
+              <td><%= candidate.companions.formator.name %></td>
+              <td><%= candidate.companions.spiritualDirector.name %></td>
               <td><%= candidate.candidacyType %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
@@ -231,6 +231,7 @@
   </div>
 
   <script>
+    // DELETE OR EDIT CANDIDATE
     $(document).ready(function () {
       $('.delete').click(function (e) {
         // do something when delete button is clicked
@@ -253,6 +254,7 @@
     });
   </script>
   <script>
+      // DELETE OR EDIT COMMUNITY
       $('.deleteCommunity').click(function (e) {
         // do something when delete button is clicked
         let result = confirm("Please confirm you want to delete this community?");
@@ -273,7 +275,6 @@
         let _id = this.id.replace('Edit', '');
         window.location.pathname = '/updatecommunity/' + _id;
       });
-
   </script>
 
 

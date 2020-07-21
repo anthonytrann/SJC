@@ -80,8 +80,8 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
-              <td><%= candidate.spritualDirector %></td>
+              <td><%= candidate.companions.formator.name %></td>
+              <td><%= candidate.companions.spiritualDirector.name %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
               <td><%= candidate.permanentAddress.region %></td>
@@ -144,7 +144,7 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
+              <td><%= candidate.companions.formator.name %></td>
               <td><%= candidate.spiritualDirector %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
@@ -208,8 +208,8 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
-              <td><%= candidate.spritualDirector %></td>
+              <td><%= candidate.companions.formator.name %></td>
+              <td><%= candidate.companions.spiritualDirector.name %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
               <td><%= candidate.permanentAddress.region %></td>
@@ -272,8 +272,8 @@
               <td><%= candidate.university %></td>
               <td><%= candidate.major %></td>
               <td><%= candidate.educationStatus %></td>
-              <td><%= candidate.formator %></td>
-              <td><%= candidate.spritualDirector %></td>
+              <td><%= candidate.companions.formator.name %></td>
+              <td><%= candidate.companions.spiritualDirector.name %></td>
               <td><%= candidate.candidacyDate %></td>
               <td><%= candidate.communityDate %></td>
               <% if(candidate.communityAddress === undefined ) { %>

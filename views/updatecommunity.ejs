@@ -28,15 +28,15 @@
             <div class="form-group col-md-4">
               <% console.log(communityFound.communityName) %>
               <label for="inputCommunityName">Community Name</label>
-              <input type="text" class="form-control" id="inputCommunityName" name="communityName" value=<%- + communityFound.communityName %> required>
+              <input type="text" class="form-control" id="inputCommunityName" name="communityName" value=<%= communityFound.communityName %> required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputCommunitySaint">Patron Saint</label>
-              <input type="text" class="form-control" id="inputCommunitySaint" name="communitySaint" value=<%- communityFound.communitySaint %> required>
+              <input type="text" class="form-control" id="inputCommunitySaint" name="communitySaint" value=<%= communityFound.communitySaint %> required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputCommunityPhone">Phone Number</label>
-              <input type="text" class="form-control" id="inputCommunityPhone" name="communityPhone" value=<%- communityFound.communityPhone %> required>
+              <input type="text" class="form-control" id="inputCommunityPhone" name="communityPhone" value=<%= communityFound.communityPhone %> required>
             </div>
           </div>
           <div class="form-row">

@@ -45,8 +45,10 @@
               <div class="card-header" id=<%= companionHeading %>>
                 <h5 class="mb-0">
                   <button class="btn" type="button" data-toggle="collapse" data-target=<%= hashCompanionCollapse %> aria-expanded="false" aria-controls=<%= companionCollapse %>>
-                    Name: <%= formatorArray[i].name %> | Number of candidates: <%= formatorArray.length %>
+                    Name: <%= formatorArray[i].name %>
                   </button>
+                  <button class="updateCompanion btn btn-primary" id=<%= formatorArray[i]._id + "Edit" %>><i class="material-icons">edit</i></button>
+                  <button class="deleteCompanion btn btn-primary" id=<%= formatorArray[i]._id + "Delete" %>><i class="material-icons">delete</i></button>
                 </h5>
               </div>
               <div id=<%= companionCollapse %> class="collapse" aria-labelledby=<%= companionHeading %> data-parent="#accordion">
@@ -60,7 +62,10 @@
                           <th scope="col">Firstname</th>
                           <th scope="col">Email</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Formator</th>
+                          <th scope="col">Spiritual Director</th>
                           <th scope="col">Permanent Address</th>
+                          <th scope="col">Community</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -68,7 +73,7 @@
                         for (let j=0; j<communityCandidateList.length; j++) {
                           let communityList = communityCandidateList[j].list;
                           for (let k=0; k<communityList.length; k++) {
-                            if (communityList[k].formator === formatorArray[i].name ) {
+                            if (communityList[k].companions.formator.name === formatorArray[i].name ) {
                               count = count + 1;
                               let candidate = communityList[k]; %>
                               <tr>
@@ -77,13 +82,14 @@
                                 <td><%= candidate.firstname %></td>
                                 <td><%= candidate.email %></td>
                                 <td><%= candidate.phoneNumber %></td>
+                                <td><%= candidate.companions.formator.name %></td>
+                                <td><%= candidate.companions.spiritualDirector.name %></td>
                                 <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
                                 <td><%= address %></td>
+                                <td><%= candidate.communityAddress.communityName %></td>
                                 <td>
-                                  <button class="update" id=<%= candidate._id + "Edit" %>><i
-                                      class="material-icons">edit</i></button>
-                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i
-                                      class="material-icons">delete</i></button>
+                                  <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
+                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
                                 </td>
                               </tr>
                             <% }
@@ -111,8 +117,10 @@
               <div class="card-header" id=<%= companionHeading %>>
                 <h5 class="mb-0">
                   <button class="btn" type="button" data-toggle="collapse" data-target=<%= hashCompanionCollapse %> aria-expanded="false" aria-controls=<%= companionCollapse %>>
-                    Name: <%= spiritualDirectorArray[i].name %> | Number of candidates: <%= spiritualDirectorArray.length %>
+                    Name: <%= spiritualDirectorArray[i].name %> 
                   </button>
+                  <button class="updateCompanion btn btn-primary" id=<%= spiritualDirectorArray[i]._id + "Edit" %>><i class="material-icons">edit</i></button>
+                  <button class="deleteCompanion btn btn-primary" id=<%= spiritualDirectorArray[i]._id + "Delete" %>><i class="material-icons">delete</i></button>
                 </h5>
               </div>
               <div id=<%= companionCollapse %> class="collapse" aria-labelledby=<%= companionHeading %> data-parent="#accordion">
@@ -126,7 +134,10 @@
                           <th scope="col">Firstname</th>
                           <th scope="col">Email</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Formator</th>
+                          <th scope="col">Spiritual Director</th>
                           <th scope="col">Permanent Address</th>
+                          <th scope="col">Community</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -134,7 +145,7 @@
                         for (let j=0; j<communityCandidateList.length; j++) {
                           let communityList = communityCandidateList[j].list;
                           for (let k=0; k<communityList.length; k++) {
-                            if (communityList[k].spiritualDirector === spiritualDirectorArray[i].name ) {
+                            if (communityList[k].companions.spiritualDirector.name === spiritualDirectorArray[i].name ) {
                               count = count + 1;
                               let candidate = communityList[k]; %>
                               <tr>
@@ -143,12 +154,14 @@
                                 <td><%= candidate.firstname %></td>
                                 <td><%= candidate.email %></td>
                                 <td><%= candidate.phoneNumber %></td>
+                                <td><%= candidate.companions.formator.name %></td>
+                                <td><%= candidate.companions.spiritualDirector.name %></td>
                                 <% let address = candidate.permanentAddress.houseNumber1 + " " + candidate.permanentAddress.street1 + ", " + candidate.permanentAddress.ward1 + ", " + candidate.permanentAddress.district1 + ", " + candidate.permanentAddress.city1; %>
                                 <td><%= address %></td>
+                                <td><%= candidate.communityAddress.communityName %></td>
                                 <td>
                                   <button class="update" id=<%= candidate._id + "Edit" %>><i class="material-icons">edit</i></button>
-                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i
-                                      class="material-icons">delete</i></button>
+                                  <button class="delete" id=<%= candidate._id + "Delete" %>><i class="material-icons">delete</i></button>
                                 </td>
                               </tr>
                             <% }
@@ -165,6 +178,53 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // DELETE OR EDIT CANDIDATE
+    $(document).ready(function () {
+      $('.delete').click(function (e) {
+        // do something when delete button is clicked
+        let result = confirm("Please confirm you want to delete the candidate?");
+        if (result) {
+          let _id = this.id.replace('Delete', '')
+          location.reload();
+          $.ajax({
+            url: '/deletecandidate/' + _id,
+            type: 'DELETE',
+            success: function (result) { }
+          });
+        }
+      });
+
+      $('.update').click(function (e) {
+        let _id = this.id.replace('Edit', '');
+        window.location.pathname = '/updatecandidate/' + _id;
+      });
+    });
+  </script>
+  <script>
+    // DELETE OR EDIT COMPANION
+    $('.deleteCompanion').click(function (e) {
+      // do something when delete button is clicked
+      let result = confirm("Please confirm you want to delete this companion?");
+      if (result) {
+        let _id = this.id.replace('Delete', '')
+        $.ajax({
+          url: '/deletecompanion/' + _id,
+          type: 'DELETE',
+          success: function (result) {
+            console.log(result.message);
+            location.reload();
+          }
+        });
+      }
+    });
+
+    $('.updateCompanion').click(function (e) {
+      let _id = this.id.replace('Edit', '');
+      window.location.pathname = '/updatecompanion/' + _id;
+    });
+</script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

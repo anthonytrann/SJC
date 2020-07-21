@@ -84,32 +84,32 @@
           <label for="inputEducationStatus">Education Status</label>
           <select id="inputEducationStatus" class="form-control" name="educationStatus"
             value=<%= candidateFound.educationStatus %> </select> required>
-            <% let selectedEdStatus = candidateFound.educationStatus 
-            if(selectedEdStatus === 'Graduated') { %>
+            <% let selectedEducationStatus = candidateFound.educationStatus 
+            if(selectedEducationStatus === 'Graduated') { %>
             <option selected>Graduated</option>
             <option>Freshman</option>
             <option>Sophomore</option>
             <option>Junior</option>
             <option>Senior</option>
-            <% } else if(selectedEdStatus === 'Freshman') { %>
+            <% } else if(selectedEducationStatus === 'Freshman') { %>
             <option>Graduated</option>
             <option selected>Freshman</option>
             <option>Sophomore</option>
             <option>Junior</option>
             <option>Senior</option>
-            <% } else if(selectedEdStatus === 'Sophomore') { %>
+            <% } else if(selectedEducationStatus === 'Sophomore') { %>
             <option>Graduated</option>
             <option>Freshman</option>
             <option selected>Sophomore</option>
             <option>Junior</option>
             <option>Senior</option>
-            <% } else if(selectedEdStatus === 'Junior') { %>
+            <% } else if(selectedEducationStatus === 'Junior') { %>
             <option>Graduated</option>
             <option>Freshman</option>
             <option>Sophomore</option>
             <option selected>Junior</option>
             <option>Senior</option>
-            <% } else if(selectedEdStatus === 'Senior') { %>
+            <% } else if(selectedEducationStatus === 'Senior') { %>
             <option>Graduated</option>
             <option>Freshman</option>
             <option>Sophomore</option>
@@ -124,7 +124,7 @@
         <div class="form-group col-md-4">
           <label for="inputFormator">Formator</label>
           <select class="form-control" id="inputFormator" name="formator">
-            <% let selectedFormator = candidateFound.formator; %>
+            <% let selectedFormator = candidateFound.companions.formator.name; %>
               <option>Select a Formator</option>
               <% for (let i = 0; i < formatorArray.length; i++) {
                 if( selectedFormator === formatorArray[i].name ) { %>
@@ -138,7 +138,7 @@
         <div class="form-group col-md-4">
           <label for="inputSpiritualDirector">Spiritual Director</label>
           <select class="form-control" id="inputSpiritualDirector" name="spiritualDirector">
-            <% let selectedSpiritualDirector = candidateFound.spiritualDirector; %>
+            <% let selectedSpiritualDirector = candidateFound.companions.spiritualDirector.name; %>
               <option>Select a Spiritual Director</option>
               <% for (let i = 0; i < spiritualDirectorArray.length; i++) {
                 if( selectedSpiritualDirector === spiritualDirectorArray[i].name ) { %>

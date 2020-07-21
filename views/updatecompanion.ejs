@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-  <title>SJC Add Companion</title>
+  <title>SJC Update Companion</title>
   </style>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -17,7 +17,7 @@
 
   <div class="jumbotron">
 
-    <h1>Add Companion</h1>
+    <h1>Update Companion</h1>
 
     <form method="post">
       <div class="col-md-12">
@@ -26,14 +26,20 @@
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="inputCompanion">Companion Name</label>
-              <input type="text" class="form-control" id="inputCompanionName" name="companionName" required>
+              <input type="text" class="form-control" id="inputCompanionName" name="companionName" value= <%= companionFound.name %> required>
             </div>
             <div class="form-group col-md-4">
               <label for="inputCompanionType">Companion Type</label>
               <select id="inputCompanionType" class="form-control" name="companionType" required>
-                <option selected disabled>Please select..</option>
-                <option>Formator</option>
-                <option>Spiritual Director</option>
+                <% if(companionFound.type === "Formator") { %>
+                  <option disabled>Please select..</option>
+                  <option selected>Formator</option>
+                  <option>Spiritual Director</option>
+                <% } else { %>
+                  <option disabled>Please select..</option>
+                  <option>Formator</option>
+                  <option selected>Spiritual Director</option>
+                <% } %>
               </select>
             </div>
           </div>

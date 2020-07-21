@@ -4,6 +4,7 @@ const getDb = require("./database").getDb;
 var ObjectId = require('mongodb').ObjectID;
 var csvtojson = require('csvtojson');
 const formidableMiddleware = require('express-formidable');
+const e = require('express');
 
 var sess; // should not be global, will need to change this
 
@@ -150,8 +151,8 @@ router.get('/companions', (req, res) => {
               spiritualDirectorArray.push(companion);
             }
           }
-          res.render('companions', { 
-            communityCandidateList: communityCandidateList, 
+          res.render('companions', {
+            communityCandidateList: communityCandidateList,
             formatorArray: formatorArray,
             spiritualDirectorArray: spiritualDirectorArray
           });
@@ -161,7 +162,6 @@ router.get('/companions', (req, res) => {
   } else {
     res.render('login');
   }
-
 });
 
 /* SPECIALIZED MAJOR PAGE */
@@ -500,15 +500,15 @@ router.post('/updatecommunity/:id', (req, res) => {
   communities.findOneAndUpdate({ "_id": ObjectId(id) }, { $set: updatedCommunity })
     .then(result => {
       console.log(result);
-
+      let candidates = db.collection('candidates')
+      communities.find({}).toArray((err, communityRecords) => {
+        candidates.find({ $and: [{ candidacyType: { $nin: ['Ex-Candidate'] } }, { communityAddress: { $nin: [{}] } }] }).toArray((err, candidateRecords) => {
+          res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords });
+        });
+      });
     });
 
-  let candidates = db.collection('candidates')
-  communities.find({}).toArray((err, communityRecords) => {
-    candidates.find({ $and: [{ candidacyType: { $nin: ['Ex-Candidate'] } }, { communityAddress: { $nin: [{}] } }] }).toArray((err, candidateRecords) => {
-      res.render('communities', { communityRecords: communityRecords, candidateRecords: candidateRecords });
-    });
-  });
+
 });
 
 /* CRUD CANDIDATE` */
@@ -561,8 +561,10 @@ router.post('/addcandidate', (req, res) => {
     "university": req.body.university,
     "major": req.body.major,
     "educationStatus": req.body.educationStatus,
-    "formator": req.body.formator,
-    "spiritualDirector": req.body.spiritualDirector,
+    "companions": {
+      "formator": {},
+      "spiritualDirector": {},
+    },
     "candidacyType": req.body.candidacyType,
     "candidacyDate": req.body.candidacyDate,
     "communityDate": req.body.communityDate,
@@ -589,19 +591,31 @@ router.post('/addcandidate', (req, res) => {
         }
       }
     }
-    if (newCandidate.formator === 'Select a Formator') {
-      newCandidate.formator = "";
-    }
-    if (newCandidate.spiritualDirector === "Select a Spiritual Director") {
-      newCandidate.spiritualDirector = "";
-    }
-    let candidates = db.collection('candidates');
-    candidates.insertOne(newCandidate, {}, (error, result) => {
-      if (error) {
-        console.log(error.message);
+    let companions = db.collection('companions');
+    companions.find({}).toArray((error, companionRecords) => {
+      if (String(req.body.formator) === 'Select a Formator') {
+        newCandidate.companions.formator = {};
       }
+      if (String(req.body.spiritualDirector) === "Select a Spiritual Director") {
+        newCandidate.companions.spiritualDirector = {};
+      }
+      for (let i = 0; i < companionRecords.length; i++) {
+        let companion = companionRecords[i];
+        if (companion.name === String(req.body.formator)) {
+          newCandidate.companions.formator = companion;
+        }
+        if (companion.name === String(req.body.spiritualDirector)) {
+          newCandidate.companions.spiritualDirector = companion;
+        }
+      }
+      let candidates = db.collection('candidates');
+      candidates.insertOne(newCandidate, {}, (error, result) => {
+        if (error) {
+          console.log(error.message);
+        }
+      });
+      res.redirect("candidates");
     });
-    res.redirect("candidates");
   });
 });
 
@@ -709,8 +723,6 @@ router.get('/updatecandidate/:id', (req, res) => {
   } else {
     res.render('login');
   }
-
-
 });
 
 router.post('/updatecandidate/:id', (req, res) => {
@@ -725,8 +737,10 @@ router.post('/updatecandidate/:id', (req, res) => {
     "university": req.body.university,
     "major": req.body.major,
     "educationStatus": req.body.educationStatus,
-    "formator": req.body.formator,
-    "spiritualDirector": req.body.spiritualDirector,
+    "companions": {
+      "formator": {},
+      "spiritualDirector": {}
+    },
     "candidacyType": req.body.candidacyType,
     "candidacyDate": req.body.candidacyDate,
     "communityDate": req.body.communityDate,
@@ -754,14 +768,23 @@ router.post('/updatecandidate/:id', (req, res) => {
       }
     }
 
-    if (updatedcandidate.formator === 'Select a Formator') {
-      updatedcandidate.formator = "";
-    }
-    if (updatedcandidate.spiritualDirector === 'Select a Spiritual Director') {
-      updatedcandidate.spiritualDirector = "";
-    }
-
-    try {
+    let companions = db.collection('companions');
+    companions.find({}).toArray((error, companionRecords) => {
+      if (String(req.body.formator) === 'Select a Formator') {
+        updatedcandidate.companions.formator = {};
+      }
+      if (String(req.body.spiritualDirector) === "Select a Spiritual Director") {
+        updatedcandidate.companions.spiritualDirector = {};
+      }
+      for (let i = 0; i < companionRecords.length; i++) {
+        let companion = companionRecords[i];
+        if (companion.name === String(req.body.formator)) {
+          updatedcandidate.companions.formator = companion;
+        }
+        if (companion.name === String(req.body.spiritualDirector)) {
+          updatedcandidate.companions.spiritualDirector = companion;
+        }
+      }
       let candidates = db.collection('candidates');
 
       let id = req.params.id;
@@ -770,25 +793,20 @@ router.post('/updatecandidate/:id', (req, res) => {
       candidates.findOneAndUpdate({ "_id": ObjectId(id) }, { $set: updatedcandidate })
         .then(result => {
           console.log(result);
-
+          candidates.find({}).toArray((err, candidateRecords) => {
+            let activeArray = [];
+            let excandidateArray = [];
+            candidateRecords.forEach(candidate => {
+              if (candidate.candidacyType === 'Ex-Candidate') {
+                excandidateArray.push(candidate);
+              } else {
+                activeArray.push(candidate);
+              }
+            });
+            res.render('candidates', { activeArray: activeArray, excandidateArray: excandidateArray });
+          });
         });
-      candidates.find({}).toArray((err, candidateRecords) => {
-        let activeArray = [];
-        let excandidateArray = [];
-        candidateRecords.forEach(candidate => {
-          if (candidate.candidacyType === 'Ex-Candidate') {
-            excandidateArray.push(candidate);
-          } else {
-            activeArray.push(candidate);
-          }
-        });
-        res.render('candidates', { activeArray: activeArray, excandidateArray: excandidateArray });
-      });
-    } catch (e) {
-      console.log(e);
-
-    }
-
+    });
   });
 });
 
@@ -815,13 +833,164 @@ router.post('/addcompanion', (req, res) => {
       .then(result => {
         console.log('Added companion');
         console.log(result);
-        res.render('companions')
       })
   } catch (err) {
     console.log(err);
-
   }
+  res.redirect('companions');
+});
 
+router.delete('/deletecompanion/:id', (req, res) => {
+  let id = req.params.id;
+  const db = getDb();
+  let companions = db.collection('companions');
+  try {
+    companions.findOneAndDelete({ "_id": ObjectId(id) }, (err, result) => {
+      if (err) {
+        console.log("Did not delete")
+      } else {
+        console.log("Deleted companion id: " + id + " successfully")
+        let candidates = db.collection('candidates');
+        candidates.updateMany(
+          { "companions.formator._id": ObjectId(id) },
+          { $set: { "companions.formator": {} } },
+          (err2, result2) => {
+            if (err2) {
+              console.log(err2);
+            } else {
+              candidates.updateMany(
+                { "companions.spiritualDirector._id": ObjectId(id) },
+                { $set: { "companions.spiritualDirector": {} } },
+                (err3, result3) => {
+                  if (err3) {
+                    console.log(err3);
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    });
+  } catch (e) {
+    console.log(e)
+  }
+  res.send({ message: "companion deleted" });
+});
+
+router.get('/updatecompanion/:id', (req, res) => {
+  sess = req.session;
+  if (sess.email) {
+    let id = req.params.id;
+    const db = getDb();
+    let companions = db.collection('companions');
+    try {
+      companions.findOne({ "_id": ObjectId(id) })
+        .then(companionFound => {
+          console.log("companionFound");
+          console.log(companionFound);
+          res.render('updatecompanion', { companionFound: companionFound });
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    res.render('login');
+  }
+});
+
+router.post('/updatecompanion/:id', (req, res) => {
+  let id = req.params.id;
+  let updatedCompanion = {
+    "name": req.body.companionName,
+    "type": req.body.companionType
+  };
+
+  let db = getDb();
+  let companions = db.collection('companions');
+  companions.findOneAndUpdate(
+    { "_id": ObjectId(id) },
+    { $set: updatedCompanion },
+    (er, result) => {
+      console.log(result);
+      let candidates = db.collection('candidates');
+      candidates.updateMany(
+        { "companions.formator._id": ObjectId(id) },
+        { $set: { "companions.formator": updatedCompanion } },
+        (error, result) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("candidates formator updated successfully");
+            candidates.updateMany(
+              { "companions.spiritualDirector._id": ObjectId(id) },
+              { $set: { "companions.spiritualDirector": updatedCompanion } },
+              (error2, result2) => {
+                if (error2) {
+                  console.log(error);
+                } else {
+                  console.log("candidates spiritual director updated successfully");
+                  let communities = db.collection('communities');
+                  let communityCandidateList = [];
+                  communities.find({}).toArray((err, communityRecords) => {
+                    for (let i = 0; i < communityRecords.length; i++) {
+                      // communityNamesArray.push(communityRecords[i].communityName);
+                      let communityObject = {
+                        "name": communityRecords[i].communityName,
+                        "list": []
+                      };
+                      communityCandidateList.push(communityObject);
+                    }
+                    communityCandidateList.push({
+                      "name": "No Community",
+                      "list": []
+                    });
+                    let candidates = db.collection('candidates');
+                    candidates.find({ candidacyType: { $nin: ["Ex-Candidate"] } }).toArray((error, candidateRecords) => {
+                      for (let i = 0; i < candidateRecords.length; i++) {
+                        for (let j = 0; j < communityCandidateList.length; j++) {
+                          let candidate = candidateRecords[i];
+                          if (candidate.communityAddress.communityName === undefined) {
+                            let noCommunity = communityCandidateList[communityCandidateList.length - 1];
+                            noCommunity.list.push(candidate);
+                            noCommunity.list[0]
+                            break;
+                          } else {
+                            if (candidate.communityAddress.communityName === communityCandidateList[j].name) {
+                              communityCandidateList[j].list.push(candidate);
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      let companions = db.collection('companions');
+                      companions.find({}).toArray((error2, companionRecords) => {
+                        let formatorArray = [];
+                        let spiritualDirectorArray = [];
+                        for (let i in companionRecords) {
+                          let companion = companionRecords[i];
+                          if (companion.type === "Formator") {
+                            formatorArray.push(companion);
+                          } else {
+                            spiritualDirectorArray.push(companion);
+                          }
+                        }
+                        res.render('companions', {
+                          communityCandidateList: communityCandidateList,
+                          formatorArray: formatorArray,
+                          spiritualDirectorArray: spiritualDirectorArray
+                        });
+                      });
+                    });
+                  });
+                }
+              }
+            );
+          }
+        }
+      );
+    }
+  );
 });
 
 module.exports = router;
